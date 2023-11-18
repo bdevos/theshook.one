@@ -9,7 +9,7 @@ export default function About() {
       </Head>
       <div class="mx-auto max-w-2xl mt-2 px-1">
         <Header label="About" disableSettings />
-        <div className="m-3 text-base text-neutral-900 leading-relaxed">
+        <div className="m-3 text-base text-neutral-900 dark:text-neutral-50 leading-relaxed">
           <p class="mb-2">
             Because I wasn't happy with{" "}
             <a href="https://theverge.com" class="underline">The Verge</a>'s
