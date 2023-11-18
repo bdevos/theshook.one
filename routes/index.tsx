@@ -19,7 +19,6 @@ type HomeProps = {
   entriesByDate: Record<string, KvEntry[]>;
   lastVisit: Date | undefined;
   lastUpdated: LastUpdated | null;
-  disabledCategories: CategoryKey[];
 };
 
 export const handler: Handlers<HomeProps> = {
@@ -35,7 +34,6 @@ export const handler: Handlers<HomeProps> = {
       lastVisit,
       entriesByDate,
       lastUpdated,
-      disabledCategories,
     });
 
     setDisabledCategoriesCookie(res.headers, disabledCategories);
@@ -46,8 +44,7 @@ export const handler: Handlers<HomeProps> = {
 };
 
 export default function Home(
-  { data: { lastVisit, lastUpdated, entriesByDate, disabledCategories } }:
-    PageProps<HomeProps>,
+  { data: { lastVisit, lastUpdated, entriesByDate } }: PageProps<HomeProps>,
 ) {
   return (
     <>
