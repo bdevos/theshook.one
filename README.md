@@ -1,17 +1,23 @@
-# Fresh project
+# theshook.one
 
-Your new Fresh project is ready to go. You can follow the Fresh "Getting
-Started" guide here: https://fresh.deno.dev/docs/getting-started
+Project to list articles from theverge.com by aggregating their RSS feeds for different categories / tags.
 
-### Usage
+## Usage
 
-Make sure to install Deno: https://deno.land/manual/getting_started/installation
-
-Then start the project:
+Start the project:
 
 ```
 deno task start
 ```
 
-This will watch the project directory and restart as necessary.
-# theshook.one
+Update the KV store with latest feed updates:
+
+```
+deno task updateEntries
+```
+
+Delete all entries from KV store:
+
+```
+deno task deleteEntries
+```
