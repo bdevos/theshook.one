@@ -1,8 +1,8 @@
 name: Update Feed Entries
 
 on:
-  # schedule:
-  #   - cron: '30 4 * * *'
+  schedule:
+    - cron: '0 * * * *'
   workflow_dispatch:
 
 permissions:
@@ -22,5 +22,5 @@ jobs:
     
     - run: deno task updateEntries
       env:
-        DENO_KV_URL: https://api.deno.com/databases/8506d5ec-e736-4231-addd-134193545071/connect
+        DENO_KV_URL: ${{ env.DENO_KV_URL }}
         DENO_KV_ACCESS_TOKEN: ${{ secrets.DENO_KV_ACCESS_TOKEN }}
