@@ -1,4 +1,5 @@
 import { Head } from "$fresh/runtime.ts";
+import Header from "../components/Header.tsx";
 
 export default function Error404() {
   return (
@@ -6,14 +7,14 @@ export default function Error404() {
       <Head>
         <title>404 - Page not found</title>
       </Head>
-      <div class="px-4 py-8 mx-auto bg-[#86efac]">
-        <div class="max-w-screen-md mx-auto flex flex-col items-center justify-center">
-          <h1 class="text-4xl font-bold">404 - Page not found</h1>
-          <p class="my-4">
-            The page you were looking for doesn't exist.
-          </p>
-          <a href="/" class="underline">Go back home</a>
-        </div>
+      <div class="mx-auto max-w-2xl mt-2 px-1">
+        <Header label="404 - Page not found" disableSettings />
+        <p class="my-4 text-neutral-900 dark:text-neutral-50">
+          The page you were looking for doesn't exist.
+        </p>
+        <a href="/" class="text-neutral-900 dark:text-neutral-50 underline">
+          Go back home
+        </a>
       </div>
     </>
   );
