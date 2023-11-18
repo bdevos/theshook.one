@@ -10,7 +10,7 @@ export default function Time({ lastVisit, published }: Props) {
 
   return (
     <span
-      class={`text-[0.65rem] sm:text-xs font-mono tabular-nums tracking-tighter ${
+      class={`text-xs font-mono tabular-nums tracking-tighter ${
         isBold
           ? "font-bold text-neutral-900 dark:text-neutral-50"
           : "font-normal text-neutral-700 dark:text-neutral-200"

@@ -9,10 +9,10 @@ type Props = {
 export default function Header({ label, disableSettings = false }: Props) {
   return (
     <div class="flex justify-between items-center gap-x-5 mx-2">
-      <div class="flex items-center gap-x-3 sm:gap-x-4">
-        <a class="text-4xl sm:text-5xl" href="/">🫨</a>
+      <div class="flex items-center gap-x-4">
+        <a class="text-5xl" href="/">🫨</a>
         <div>
-          <h1 class="text-xl sm:text-2xl font-bold text-neutral-900 dark:text-neutral-50">
+          <h1 class="text-2xl font-bold text-neutral-900 dark:text-neutral-50">
             {label}
           </h1>
         </div>

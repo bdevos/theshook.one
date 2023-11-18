@@ -58,7 +58,7 @@ export default function Categories(
       <Head>
         <title>Disabled Categories | theshook.¹</title>
       </Head>
-      <div class="mx-auto max-w-none sm:max-w-sm mt-2 px-1 relative">
+      <div class="mx-auto max-w-2xl mt-2 px-1 relative">
         <Header label="Disabled Categories" disableSettings />
         <form method="post" action="/categories">
           <div class="mt-4 divide-y divide-neutral-200 dark:divide-neutral-700">
@@ -70,7 +70,7 @@ export default function Categories(
                 <CategoryIndicator categories={[category]} />
                 <label
                   htmlFor={`disable-${category}`}
-                  class="min-w-0 flex-1 text-sm sm:text-base leading-loose sm:leading-relaxed select-none font-medium text-neutral-900 dark:text-neutral-50"
+                  class="min-w-0 flex-1 text-base leading-loose sm:leading-relaxed select-none font-medium text-neutral-900 dark:text-neutral-50"
                 >
                   {label}
                 </label>

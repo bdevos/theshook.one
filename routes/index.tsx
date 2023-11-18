@@ -7,7 +7,6 @@ import Time from "../components/Time.tsx";
 import { getLastUpdated, type LastUpdated } from "../src/kv/lastUpdated.ts";
 import { listEntriesByDate } from "../src/kv/list.ts";
 import { type KvEntry } from "../src/kv/kv.ts";
-import { type CategoryKey } from "../src/feed/categories.ts";
 import {
   getDisabledCategories,
   getLastVisit,
@@ -71,7 +70,7 @@ export default function Home(
                     <div class="w-full border-t border-neutral-300 dark:border-neutral-500" />
                   </div>
                   <h2 class="relative flex justify-start">
-                    <span class="font-mono bg-neutral-50 dark:bg-black ml-2 sm:ml-3 px-1 text-[0.7rem] font-bold leading-4 text-neutral-800 dark:text-neutral-100">
+                    <span class="font-mono bg-neutral-50 dark:bg-black ml-3 px-1 text-[0.7rem] font-bold leading-4 text-neutral-800 dark:text-neutral-100">
                       {date}
                     </span>
                   </h2>
@@ -81,14 +80,14 @@ export default function Home(
               {entries.map(({ categories, href, title, published }) => (
                 <li
                   key={href}
-                  class="flex flex-row gap-1 sm:gap-2 whitespace-nowrap items-center"
+                  class="flex flex-row gap-2 whitespace-nowrap items-center"
                 >
                   <CategoryIndicator categories={categories} />
                   <Time lastVisit={lastVisit} published={published} />
                   <a
                     href={href}
                     target="_blank"
-                    class="text-neutral-900 dark:text-neutral-50 visited:text-fuchsia-800 dark:visited:text-fuchsia-200 truncate text-sm sm:text-base leading-loose sm:leading-normal"
+                    class="text-neutral-900 dark:text-neutral-50 visited:text-fuchsia-800 dark:visited:text-fuchsia-200 truncate text-base leading-relaxed"
                   >
                     {title}
                   </a>
