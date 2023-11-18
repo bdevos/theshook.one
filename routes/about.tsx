@@ -46,12 +46,6 @@ export default function About() {
             <a href="https://deno.com/deploy" class="underline">Deno Deploy</a>.
             These guys are creating awesome software that is a joy to use.
           </p>
-          <p>
-            I also want to express my gratitude to{" "}
-            <a href="https://chat.openai.com" class="underline">ChatGPT</a>{" "}
-            for making it easier to overcome those writer's/coder's block
-            moments.
-          </p>
         </div>
       </div>
     </>
