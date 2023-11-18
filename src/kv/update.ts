@@ -1,13 +1,15 @@
 import { getEntries } from "../feed/getEntries.ts";
 import { calculateExpireIn } from "./expireIn.ts";
-import { ENTRIES, kv, LAST_UPDATED } from "./kv.ts";
+import { ENTRIES, LAST_UPDATED } from "./kv.ts";
 
-export const updateEntries = async () => {
-  await update();
+export const updateEntries = async (kvUrl?: string) => {
+  const kv = await Deno.openKv(kvUrl);
+
+  await update(kv);
   await kv.set([LAST_UPDATED], new Date());
 };
 
-const update = async () => {
+const update = async (kv: Deno.Kv) => {
   const entries = await getEntries();
   const kvSetPromises = entries.map(async ({ id, entry }) => {
     const expireIn = calculateExpireIn(entry);

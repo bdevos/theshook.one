@@ -12,7 +12,5 @@ export type KvEntryId = {
   entry: KvEntry;
 };
 
-export const kv = await Deno.openKv();
-
 export const ENTRIES = "entries";
 export const LAST_UPDATED = "lastUpdated";

@@ -1,13 +1,15 @@
 import { deleteEntries } from "./src/kv/delete.ts";
 import { updateEntries } from "./src/kv/update.ts";
 
-const entries = async (arg: string) => {
+const entries = async (arg?: string) => {
+  const kvUrl = Deno.env.get("DENO_KV_URL");
+
   switch (arg) {
     case "delete":
-      await deleteEntries();
+      await deleteEntries(kvUrl);
       return;
     case "update":
-      await updateEntries();
+      await updateEntries(kvUrl);
       return;
     default:
       console.log(`Unknown argument "${arg}"`);
@@ -15,4 +17,4 @@ const entries = async (arg: string) => {
   }
 };
 
-await entries(Deno.args[0]);
+await entries(Deno.args.at(0));

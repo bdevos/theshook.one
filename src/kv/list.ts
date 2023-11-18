@@ -1,8 +1,11 @@
 import { CategoryKey } from "../feed/categories.ts";
 import { formatDay } from "../formatters.ts";
-import { ENTRIES, kv, KvEntry } from "./kv.ts";
+import { ENTRIES, KvEntry } from "./kv.ts";
 
-export const listEntriesByDate = async (disabledCategories: CategoryKey[]) => {
+export const listEntriesByDate = async (
+  kv: Deno.Kv,
+  disabledCategories: CategoryKey[],
+) => {
   const res = kv.list<KvEntry>({ prefix: [ENTRIES] });
   const entries: KvEntry[] = [];
   for await (const { value } of res) {

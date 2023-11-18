@@ -24,11 +24,12 @@ type HomeProps = {
 
 export const handler: Handlers<HomeProps> = {
   async GET(req, ctx) {
+    const kv = await Deno.openKv();
     const lastVisit = getLastVisit(req.headers);
     const disabledCategories = getDisabledCategories(req.headers);
 
-    const entriesByDate = await listEntriesByDate(disabledCategories);
-    const lastUpdated = await getLastUpdated();
+    const entriesByDate = await listEntriesByDate(kv, disabledCategories);
+    const lastUpdated = await getLastUpdated(kv);
 
     const res = await ctx.render({
       lastVisit,

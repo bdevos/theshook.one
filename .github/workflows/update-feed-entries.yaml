@@ -20,5 +20,7 @@ jobs:
       with:
         deno-version: v1.x
     
-    - run: |
-        deno --version
+    - run: deno task updateEntries
+      with:
+        DENO_KV_URL: https://api.deno.com/databases/8506d5ec-e736-4231-addd-134193545071/connect
+        DENO_KV_ACESS_TOKEN: ${{ secrets.DENO_KV_ACESS_TOKEN }}
