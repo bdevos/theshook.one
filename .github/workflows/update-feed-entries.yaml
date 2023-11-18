@@ -5,10 +5,13 @@ on:
   #   - cron: '30 4 * * *'
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
-  build:
+  update:
+    runs-on: ubuntu-latest
     timeout-minutes: 3
-    permissions: read-all
 
     steps:
     - uses: actions/checkout@v4
