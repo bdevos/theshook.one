@@ -55,8 +55,8 @@ const getEntriesByCategory = async (category: CategoryKey) => {
     // The feed lookup seems to fail every once in a while, when that is the case the server responds with
     // content-length: 0
     // content-type: text/html
-    // It seems be be an issue with the feed and after some time the feed seems to work again. I tried
-    // a bunch of things, but if even happens in the browser every once in a while.
+    // It seems be be an issue with the feed and after some time it seems to work again. I tried
+    // a bunch of things, but it even happens in the browser every once in a while.
     console.error(`getEntriesByCategory ${category} failed`);
     return [];
   }
