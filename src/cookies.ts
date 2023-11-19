@@ -3,12 +3,12 @@ import {
   deleteCookie,
   getCookies,
   setCookie,
-} from "https://deno.land/std@0.207.0/http/cookie.ts";
-import addMonths from "https://deno.land/x/date_fns@v2.22.1/addMonths/index.ts";
-import { categories, type CategoryKey } from "./feed/categories.ts";
+} from 'https://deno.land/std@0.207.0/http/cookie.ts'
+import addMonths from 'https://deno.land/x/date_fns@v2.22.1/addMonths/index.ts'
+import { categories, type CategoryKey } from './feed/categories.ts'
 
-const disabledCategoriesCookieName = "disabledCategories";
-const lastVisitCookieName = "lastVisit";
+const disabledCategoriesCookieName = 'disabledCategories'
+const lastVisitCookieName = 'lastVisit'
 
 export const setDisabledCategoriesCookie = (
   headers: Headers,
@@ -17,52 +17,52 @@ export const setDisabledCategoriesCookie = (
   if (disabledCategories.length > 0) {
     const disabledCategoriesCookie: Cookie = {
       name: disabledCategoriesCookieName,
-      value: disabledCategories.join("|"),
+      value: disabledCategories.join('|'),
       httpOnly: true,
-      sameSite: "Strict",
+      sameSite: 'Strict',
       expires: addMonths(new Date(), 1),
-    };
-    setCookie(headers, disabledCategoriesCookie);
+    }
+    setCookie(headers, disabledCategoriesCookie)
   } else {
-    deleteCookie(headers, disabledCategoriesCookieName);
+    deleteCookie(headers, disabledCategoriesCookieName)
   }
-};
+}
 
 export const setLastVisitCookie = (headers: Headers) => {
   const lastVisitCookie: Cookie = {
     name: lastVisitCookieName,
     value: new Date().toISOString(),
     httpOnly: true,
-    sameSite: "Strict",
+    sameSite: 'Strict',
     expires: addMonths(new Date(), 1),
-  };
-  setCookie(headers, lastVisitCookie);
-};
+  }
+  setCookie(headers, lastVisitCookie)
+}
 
 export const getDisabledCategories = (
   headers: Headers,
 ): CategoryKey[] => {
-  const value = getCookies(headers)[disabledCategoriesCookieName];
+  const value = getCookies(headers)[disabledCategoriesCookieName]
   if (!value) {
-    return [];
+    return []
   }
 
-  return value.split("|").map((category) =>
+  return value.split('|').map((category) =>
     category in categories ? category : null
-  ).filter((category): category is CategoryKey => !!category);
-};
+  ).filter((category): category is CategoryKey => !!category)
+}
 
 export const getLastVisit = (
   headers: Headers,
 ): Date | undefined => {
-  const value = getCookies(headers)[lastVisitCookieName];
+  const value = getCookies(headers)[lastVisitCookieName]
 
   if (!value) {
-    return undefined;
+    return undefined
   }
 
-  const asDate = new Date(value);
+  const asDate = new Date(value)
   if (!isNaN(asDate.getTime())) {
-    return asDate;
+    return asDate
   }
-};
+}
