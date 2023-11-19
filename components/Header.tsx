@@ -25,7 +25,7 @@ export default function Header(
 ) {
   return (
     <div class='flex justify-between items-center gap-x-5 mx-2 mb-2'>
-      <div class='flex items-center gap-x-4'>
+      <div class='flex items-center gap-x-3'>
         <a class='text-5xl' href='/'>🫨</a>
         <div class='flex flex-col'>
           <h1 class='text-2xl font-bold text-neutral-800 dark:text-neutral-50'>
