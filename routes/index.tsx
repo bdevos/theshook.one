@@ -51,7 +51,7 @@ export default function Home(
         <title>theshook.¹</title>
       </Head>
       <div class='mx-auto max-w-2xl mt-2 px-1'>
-        <Header label='The Verge Feed' />
+        <Header label='The Verge Feed' lastUpdated={lastUpdated} />
         <ul>
           {Object.entries(entriesByDate).map(([date, entries]) => (
             <>
@@ -63,7 +63,7 @@ export default function Home(
             </>
           ))}
         </ul>
-        <Footer lastUpdated={lastUpdated} />
+        <Footer />
       </div>
     </>
   )
