@@ -1,4 +1,5 @@
 import { Head } from '$fresh/runtime.ts'
+import Footer from '../components/Footer.tsx'
 import Header from '../components/Header.tsx'
 
 export default function About() {
@@ -9,7 +10,7 @@ export default function About() {
       </Head>
       <div class='mx-auto max-w-2xl mt-2 px-1'>
         <Header label='About' disableSettings />
-        <div className='m-3 text-base text-neutral-900 dark:text-neutral-50 leading-relaxed'>
+        <div className='m-3 text-base leading-relaxed'>
           <p class='mb-2'>
             Because I wasn't happy with{' '}
             <a href='https://theverge.com' class='underline'>The Verge</a>'s
@@ -38,7 +39,7 @@ export default function About() {
           <h2 class='mt-4 text-lg font-semibold leading-loose'>
             With a little help from:
           </h2>
-          <p class='mb-2'>
+          <p>
             This website is built with{' '}
             <a href='https://fresh.deno.dev' class='underline'>Deno Fresh</a>
             {' '}
@@ -47,6 +48,7 @@ export default function About() {
             These guys are creating awesome software that is a joy to use.
           </p>
         </div>
+        <Footer />
       </div>
     </>
   )

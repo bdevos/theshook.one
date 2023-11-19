@@ -8,7 +8,7 @@ export default function App({ Component }: AppProps) {
         <link rel='icon' type='image/x-icon' href='/favicon.ico' />
         <link rel='apple-touch-icon' href='/3311.png' />
       </Head>
-      <body class='bg-neutral-50 dark:bg-black'>
+      <body class='bg-neutral-50 dark:bg-black text-neutral-900 dark:text-neutral-50'>
         <Component />
       </body>
     </>

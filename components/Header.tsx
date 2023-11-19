@@ -12,7 +12,7 @@ export default function Header({ label, disableSettings = false }: Props) {
       <div class='flex items-center gap-x-4'>
         <a class='text-5xl' href='/'>🫨</a>
         <div>
-          <h1 class='text-2xl font-bold text-neutral-900 dark:text-neutral-50'>
+          <h1 class='text-2xl font-bold'>
             {label}
           </h1>
         </div>
@@ -21,7 +21,7 @@ export default function Header({ label, disableSettings = false }: Props) {
         <a
           type='button'
           href='/categories'
-          class='inline-flex items-center gap-x-1.5 rounded-md bg-neutral-200 dark:bg-neutral-800 px-2.5 py-1.5 text-xs font-semibold text-neutral-900 dark:text-neutral-50 shadow-sm hover:bg-neutral-300 dark:hover:bg-neutral-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fuchsia-500'
+          class='inline-flex items-center gap-x-1.5 rounded-md bg-neutral-200 dark:bg-neutral-800 px-2.5 py-1.5 text-xs font-semibold shadow-sm hover:bg-neutral-300 dark:hover:bg-neutral-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fuchsia-500'
         >
           <SettingsIcon aria-hidden='true' />
         </a>

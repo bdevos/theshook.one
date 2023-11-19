@@ -17,13 +17,17 @@ type CategoriesProps = {
 }
 
 const parseDisabledCategories = (formData: FormData): CategoryKey[] => {
-  const disabledCategories: CategoryKey[] = []
+  const enabledCategories: CategoryKey[] = []
 
   for (const [category, value] of formData.entries()) {
     if (category in categories && value === 'on') {
-      disabledCategories.push(category as CategoryKey)
+      enabledCategories.push(category as CategoryKey)
     }
   }
+
+  const disabledCategories = categoriesArray()
+    .filter(({ category }) => !enabledCategories.includes(category))
+    .map(({ category }) => category)
 
   return disabledCategories
 }
@@ -56,10 +60,15 @@ export default function Categories(
   return (
     <>
       <Head>
-        <title>Disabled Categories | theshook.¹</title>
+        <title>Categories | theshook.¹</title>
       </Head>
       <div class='mx-auto max-w-2xl mt-2 px-1 relative'>
-        <Header label='Disabled Categories' disableSettings />
+        <Header label='Categories' disableSettings />
+        <p class='mt-4 text-sm mx-2'>
+          When you disable a category, it will be filtered out of the results
+          with priority. So, if you only disable 'Elon Musk,' it will no longer
+          show an article tagged with both 'Tech' and 'Elon Musk'.
+        </p>
         <form method='post' action='/categories'>
           <div class='mt-4 divide-y divide-neutral-200 dark:divide-neutral-700'>
             {categoriesArray().map(({ category, label }) => (
@@ -69,35 +78,37 @@ export default function Categories(
               >
                 <CategoryIndicator categories={[category]} />
                 <label
-                  htmlFor={`disable-${category}`}
-                  class='min-w-0 flex-1 text-base leading-loose sm:leading-relaxed select-none font-medium text-neutral-900 dark:text-neutral-50'
+                  htmlFor={`category-${category}`}
+                  class='min-w-0 flex-1 text-base leading-loose sm:leading-relaxed select-none font-medium'
                 >
                   {label}
                 </label>
                 <input
-                  id={`disable-${category}`}
+                  id={`category-${category}`}
                   name={category}
-                  checked={disabledCategories.includes(category)}
+                  checked={!disabledCategories.includes(category)}
                   type='checkbox'
                   class='h-4 w-4 accent-fuchsia-600'
                 />
               </div>
             ))}
           </div>
-          <div class='flex flex-row sticky bottom-0 py-3 px-2 bg-neutral-50 dark:bg-black border-t border-neutral-200 dark:border-neutral-700 gap-x-2 justify-end'>
-            <a
-              href='/'
-              type='button'
-              class='rounded-md bg-neutral-50 dark:bg-black px-2 py-2 text-sm font-semibold text-neutral-900 dark:text-white hover:shadow-sm hover:bg-neutral-100 dark:hover:bg-neutral-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fuchsia-500'
-            >
-              Cancel
-            </a>
-            <button
-              type='submit'
-              class='rounded-md bg-fuchsia-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-fuchsia-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fuchsia-500'
-            >
-              Save
-            </button>
+          <div class='sticky bottom-0 -mx-1 px-1 backdrop-blur-sm bg-neutral-50/50 dark:bg-black/25'>
+            <div class='flex flex-row  py-3 px-2 border-t border-neutral-200 dark:border-neutral-700 gap-x-2 justify-end'>
+              <a
+                href='/'
+                type='button'
+                class='rounded-md bg-neutral-50 dark:bg-black px-2 py-2 text-sm font-semibold hover:shadow-sm hover:bg-neutral-100 dark:hover:bg-neutral-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fuchsia-500'
+              >
+                Cancel
+              </a>
+              <button
+                type='submit'
+                class='rounded-md bg-fuchsia-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-fuchsia-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fuchsia-500'
+              >
+                Save
+              </button>
+            </div>
           </div>
         </form>
       </div>
