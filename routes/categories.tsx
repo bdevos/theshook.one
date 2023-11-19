@@ -64,7 +64,7 @@ export default function Categories(
       </Head>
       <div class='mx-auto max-w-2xl mt-2 px-1 relative'>
         <Header label='Categories' disableSettings />
-        <p class='mt-4 text-sm mx-2'>
+        <p class='mt-2 text-sm mx-2'>
           When you disable a category, it will be filtered out of the results
           with priority. So, if you only disable 'Elon Musk,' it will no longer
           show an article tagged with both 'Tech' and 'Elon Musk'.

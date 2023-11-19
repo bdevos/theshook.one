@@ -51,14 +51,8 @@ export default function Home(
         <title>theshook.¹</title>
       </Head>
       <div class='mx-auto max-w-2xl mt-2 px-1'>
-        <Header
-          label={
-            <a href='https://www.theverge.com/'>
-              The Verge Feed
-            </a>
-          }
-        />
-        <ul class='mt-2'>
+        <Header label='The Verge Feed' />
+        <ul>
           {Object.entries(entriesByDate).map(([date, entries]) => (
             <>
               {date !== 'Today' && <ListHeader date={date} />}

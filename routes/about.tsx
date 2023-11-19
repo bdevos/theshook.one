@@ -32,8 +32,11 @@ export default function About() {
             I used{' '}
             <a href='https://tweakers.net' class='underline'>tweakers.net</a>
             {' '}
-            as inspiration for the layout. Articles that have been added since
-            your last visit will display the time in bold.
+            as inspiration for the layout. Articles added since your last visit
+            will display the time in bold. The overview also employs{' '}
+            <em class='text-fuchsia-800 dark:text-fuchsia-200'>:visited</em>
+            {' '}
+            styling to indicate which links you have already visited.
           </p>
 
           <h2 class='mt-4 text-lg font-semibold leading-loose'>
@@ -48,7 +51,7 @@ export default function About() {
             These guys are creating awesome software that is a joy to use.
           </p>
         </div>
-        <Footer />
+        <Footer isAbout />
       </div>
     </>
   )

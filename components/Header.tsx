@@ -1,14 +1,13 @@
-import { type ComponentChild } from 'preact'
 import SettingsIcon from './icons/SettingsIcon.tsx'
 
 type Props = {
-  label: ComponentChild
+  label: string
   disableSettings?: boolean
 }
 
 export default function Header({ label, disableSettings = false }: Props) {
   return (
-    <div class='flex justify-between items-center gap-x-5 mx-2'>
+    <div class='flex justify-between items-center gap-x-5 mx-2 mb-2'>
       <div class='flex items-center gap-x-4'>
         <a class='text-5xl' href='/'>🫨</a>
         <div>
