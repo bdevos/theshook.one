@@ -28,7 +28,7 @@ export default function Header(
       <div class='flex items-center gap-x-4'>
         <a class='text-5xl' href='/'>🫨</a>
         <div class='flex flex-col'>
-          <h1 class='text-2xl font-bold'>
+          <h1 class='text-2xl font-bold text-neutral-800 dark:text-neutral-50'>
             {label}
           </h1>
           {lastUpdated && (
