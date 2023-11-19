@@ -10,9 +10,8 @@ import manifest from './fresh.gen.ts'
 
 import twindPlugin from '$fresh/plugins/twindv1.ts'
 import twindConfig from './twind.config.ts'
+import { updateEntries } from './src/kv/update.ts'
 
-Deno.cron('sample cron', '*/10 * * * *', () => {
-  console.log('cron job executed every 10 minutes')
-})
+Deno.cron('Update entries', '*/10 * * * *', () => updateEntries())
 
 await start(manifest, { plugins: [twindPlugin(twindConfig)] })
