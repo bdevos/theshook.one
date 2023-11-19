@@ -19,7 +19,7 @@ const parseUpdated = ({ minutes, hours }: LastUpdated): string => {
 
 export default function Footer({ lastUpdated }: Props) {
   return (
-    <div class='flex flex-col text-xs text-neutral-700 dark:text-neutral-300 pt-6 pb-10 items-center gap-y-4'>
+    <div class='flex flex-col text-xs text-neutral-700 dark:text-neutral-300 pt-8 pb-12 items-center gap-y-6'>
       {lastUpdated && (
         <div class='flex flex-row gap-x-1'>
           <UpdatedIcon /> {parseUpdated(lastUpdated)}
