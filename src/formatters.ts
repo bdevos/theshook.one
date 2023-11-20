@@ -4,10 +4,12 @@ import isYesterday from 'https://deno.land/x/date_fns@v2.22.1/isYesterday/index.
 export const dateFormatter = new Intl.DateTimeFormat('en-US', {
   month: 'short',
   day: 'numeric',
+  timeZone: 'Europe/Amsterdam',
 })
 
 export const timeFormatter = new Intl.DateTimeFormat('nl-NL', {
   timeStyle: 'short',
+  timeZone: 'Europe/Amsterdam',
 })
 
 export const formatDay = (date: Date) => {
