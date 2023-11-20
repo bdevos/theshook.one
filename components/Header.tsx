@@ -32,7 +32,7 @@ export default function Header(
             {label}
           </h1>
           {lastUpdated && (
-            <div class='flex flex-row text-xs text-neutral-400 dark:text-neutral-500 gap-x-1 items-center -mt-1'>
+            <div class='flex flex-row text-xs text-neutral-400 dark:text-neutral-500 gap-x-1 items-center'>
               <UpdatedIcon /> {parseUpdated(lastUpdated)}
             </div>
           )}
