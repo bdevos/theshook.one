@@ -1,5 +1,4 @@
-import isToday from 'https://deno.land/x/date_fns@v2.22.1/isToday/index.ts'
-import isYesterday from 'https://deno.land/x/date_fns@v2.22.1/isYesterday/index.ts'
+import { addDays } from './date.ts'
 
 export const dateFormatter = new Intl.DateTimeFormat('en-US', {
   month: 'short',
@@ -12,10 +11,15 @@ export const timeFormatter = new Intl.DateTimeFormat('nl-NL', {
   timeZone: 'Europe/Amsterdam',
 })
 
+const todayAsString = dateFormatter.format(new Date())
+const yesterdayAsString = dateFormatter.format(addDays(new Date(), -1))
+
 export const formatDay = (date: Date) => {
-  if (isToday(date)) {
+  const formattedDate = dateFormatter.format(date)
+
+  if (formattedDate === todayAsString) {
     return 'Today'
-  } else if (isYesterday(date)) {
+  } else if (formattedDate === yesterdayAsString) {
     return 'Yesterday'
   } else {
     return dateFormatter.format(date)
