@@ -45,10 +45,25 @@ const deduplicateCategories = (entries: KvEntryId[]) => {
   }, [] as KvEntryId[])
 }
 
+const getXmlWithRetry = async (category: CategoryKey) => {
+  let retries = 0
+  while (retries < 3) {
+    // I want the first request to contain no hash, since I would like to just get the CDN cached what-ever version
+    const hash = retries === 0 ? null : crypto.randomUUID()
+    const response = await fetch(theVergeFeedUrl(category, hash))
+    const xml = await response.text()
+
+    if (xml.length === 0 && response.status === 200) {
+      retries++
+      continue
+    }
+    return xml
+  }
+}
+
 const getEntriesByCategory = async (category: CategoryKey) => {
   try {
-    const response = await fetch(theVergeFeedUrl(category))
-    const xml = await response.text()
+    const xml = await getXmlWithRetry(category) ?? ''
     const { entries } = await parseFeed(xml)
     return entries
   } catch {

@@ -101,5 +101,8 @@ export const categoriesArray = (): {
   })
 }
 
-export const theVergeFeedUrl = (category: CategoryKey) =>
-  `https://www.theverge.com/rss/${category}/index.xml`
+export const theVergeFeedUrl = (
+  category: CategoryKey,
+  hash: string | null = null,
+) =>
+  `https://www.theverge.com/rss/${category}/index.xml${!hash ? '' : `?${hash}`}`
