@@ -1,7 +1,10 @@
 export type CategoryKey =
   | 'ai-artificial-intelligence'
+  | 'antitrust'
   | 'apple'
   | 'apps'
+  | 'autonomous-cars'
+  | 'books'
   | 'business'
   | 'cars'
   | 'climate-change'
@@ -10,6 +13,7 @@ export type CategoryKey =
   | 'cyber-security'
   | 'electric-cars'
   | 'elon-musk'
+  | 'energy'
   | 'entertainment'
   | 'environment'
   | 'film'
@@ -18,12 +22,15 @@ export type CategoryKey =
   | 'games'
   | 'google'
   | 'good-deals'
+  | 'health'
   | 'how-to'
   | 'iphone'
   | 'keyboards'
   | 'meta'
   | 'microsoft'
   | 'policy'
+  | 'politics'
+  | 'regulation'
   | 'reviews'
   | 'samsung'
   | 'science'
@@ -36,6 +43,7 @@ export type CategoryKey =
   | 'transportation'
   | 'tv'
   | 'twitter'
+  | 'wearables'
   | 'youtube'
 
 type CategoryMeta = {
@@ -48,8 +56,11 @@ export const categories: Record<CategoryKey, CategoryMeta> = {
     label: 'Artificial Intelligence',
     color: '#3498db',
   },
+  'antitrust': { label: 'Antitrust', color: '#4169E1' },
   'apple': { label: 'Apple', color: '#A52A2A' },
   'apps': { label: 'Apps', color: '#FFA500' },
+  'autonomous-cars': { label: 'Autonomous Cars', color: '#008080' },
+  'books': { label: 'Books', color: '#964B00' },
   'business': { label: 'Business', color: '#95a5a6' },
   'cars': { label: 'Cars', color: '#e74c3c' },
   'climate-change': { label: 'Climate', color: '#008000' },
@@ -58,6 +69,7 @@ export const categories: Record<CategoryKey, CategoryMeta> = {
   'good-deals': { label: 'Deals', color: '#228B22' },
   'electric-cars': { label: 'Electric Cars', color: '#00a86b' },
   'elon-musk': { label: 'Elon Musk', color: '#00FFFF' },
+  'energy': { label: 'Energy', color: '#008000' },
   'entertainment': { label: 'Entertainment', color: '#e74c3c' },
   'environment': { label: 'Environment', color: '#008000' },
   'facebook': { label: 'Facebook', color: '#3b5998' },
@@ -65,12 +77,15 @@ export const categories: Record<CategoryKey, CategoryMeta> = {
   'gadgets': { label: 'Gadgets', color: '#808080' },
   'games': { label: 'Games', color: '#FF4500' },
   'google': { label: 'Google', color: '#4285F4' },
+  'health': { label: 'Health', color: '#ADD8E6' },
   'how-to': { label: 'How-to', color: '#8A2BE2' },
   'iphone': { label: 'iPhone', color: '#bdc3c7' },
   'keyboards': { label: 'Keyboards', color: '#333333' },
   'meta': { label: 'Meta', color: '#800000' },
   'microsoft': { label: 'Microsoft', color: '#00ADEF' },
   'policy': { label: 'Policy', color: '#800000' },
+  'politics': { label: 'Politics', color: '#000080' },
+  'regulation': { label: 'Regulation', color: '#00008B' },
   'reviews': { label: 'Reviews', color: '#9932CC' },
   'samsung': { label: 'Samsung', color: '#1428A0' },
   'science': { label: 'Science', color: '#4682B4' },
@@ -84,6 +99,7 @@ export const categories: Record<CategoryKey, CategoryMeta> = {
   'transportation': { label: 'Transportation', color: '#808000' },
   'tv': { label: 'TV', color: '#800080' },
   'twitter': { label: 'Twitter', color: '#1DA1F2' },
+  'wearables': { label: 'Wearable', color: '#40E0D0' },
   'youtube': { label: 'Youtube', color: '#FF0000' },
 } as const
 
