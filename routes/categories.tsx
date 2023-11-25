@@ -68,26 +68,22 @@ export default function Categories(
         <form method='post' action='/categories'>
           <div class='mt-4 divide-y divide-neutral-200 dark:divide-neutral-700'>
             {categoriesArray().map(({ category, label }) => (
-              <div
+              <label
                 key={category}
-                class='flex items-center gap-x-2 px-2'
+                class='flex items-center justify-between px-2'
               >
-                <CategoryIndicator categories={[category]} />
-                <label
-                  htmlFor={`category-${category}`}
-                  class='min-w-0 flex-1 text-base leading-loose sm:leading-relaxed select-none font-medium'
-                >
+                <div class='flex items-center gap-x-2 text-base leading-loose sm:leading-relaxed font-medium'>
+                  <CategoryIndicator categories={[category]} />
                   {label}
-                </label>
+                </div>
                 <input
-                  id={`category-${category}`}
                   name='category'
                   value={category}
                   checked={!disabledCategories.includes(category)}
                   type='checkbox'
                   class='h-4 w-4 accent-fuchsia-600'
                 />
-              </div>
+              </label>
             ))}
           </div>
           <div class='sticky bottom-0 -mx-1 px-1 backdrop-blur-sm bg-neutral-50/50 dark:bg-black/25'>
