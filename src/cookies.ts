@@ -19,7 +19,8 @@ export const setDisabledCategoriesCookie = (
       name: disabledCategoriesCookieName,
       value: disabledCategories.join('|'),
       httpOnly: true,
-      sameSite: 'Strict',
+      sameSite: 'Lax',
+      secure: true,
       expires: addMonths(new Date(), 1),
     }
     setCookie(headers, disabledCategoriesCookie)
@@ -33,7 +34,8 @@ export const setLastVisitCookie = (headers: Headers) => {
     name: lastVisitCookieName,
     value: new Date().toISOString(),
     httpOnly: true,
-    sameSite: 'Strict',
+    sameSite: 'Lax',
+    secure: true,
     expires: addMonths(new Date(), 1),
   }
   setCookie(headers, lastVisitCookie)
