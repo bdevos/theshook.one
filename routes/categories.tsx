@@ -17,13 +17,9 @@ type CategoriesProps = {
 }
 
 const parseDisabledCategories = (formData: FormData): CategoryKey[] => {
-  const enabledCategories: CategoryKey[] = []
-
-  for (const [category, value] of formData.entries()) {
-    if (category in categories && value === 'on') {
-      enabledCategories.push(category as CategoryKey)
-    }
-  }
+  const enabledCategories = formData.getAll('category')
+    .map((category) => category.toString())
+    .filter((category): category is CategoryKey => category in categories)
 
   const disabledCategories = categoriesArray()
     .filter(({ category }) => !enabledCategories.includes(category))
@@ -85,7 +81,8 @@ export default function Categories(
                 </label>
                 <input
                   id={`category-${category}`}
-                  name={category}
+                  name='category'
+                  value={category}
                   checked={!disabledCategories.includes(category)}
                   type='checkbox'
                   class='h-4 w-4 accent-fuchsia-600'
