@@ -117,6 +117,9 @@ export const categoriesArray = (): {
   })
 }
 
+export const mergeCategories = (...categories: CategoryKey[]) =>
+  Array.from(new Set(categories.flatMap((cat) => cat)))
+
 export const theVergeFeedUrl = (
   category: CategoryKey,
   hash: string | null = null,

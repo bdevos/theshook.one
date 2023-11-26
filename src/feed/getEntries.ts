@@ -2,18 +2,21 @@ import { parseFeed } from 'https://deno.land/x/rss@0.5.8/mod.ts'
 import {
   categoriesArray,
   type CategoryKey,
+  mergeCategories,
   theVergeFeedUrl,
 } from './categories.ts'
 import { type FeedEntry } from 'https://deno.land/x/rss@0.5.8/src/types/mod.ts'
 import { type KvEntryId } from '../kv/kv.ts'
 
-export const getEntries = async () => {
+export const getEntries = async (
+  prevEntryCategories: Record<string, CategoryKey[]>,
+) => {
   const settled = await Promise.allSettled(getEntriesPromises())
   const entries = settled
     .flatMap(settledResult)
     .filter((entry): entry is KvEntryId => entry !== null)
 
-  return deduplicateCategories(entries)
+  return deduplicateCategories(entries, prevEntryCategories)
 }
 
 const getEntriesPromises = () => {
@@ -25,18 +28,26 @@ const getEntriesPromises = () => {
   )
 }
 
-const deduplicateCategories = (entries: KvEntryId[]) => {
+const deduplicateCategories = (
+  entries: KvEntryId[],
+  prevEntryCategories: Record<string, CategoryKey[]>,
+) => {
   return entries.reduce((acc, entry) => {
     const knownIndex = acc.findIndex(({ id }) => entry.id === id)
     if (knownIndex >= 0) {
+      const prevCategories = acc[knownIndex].id in prevEntryCategories
+        ? prevEntryCategories[acc[knownIndex].id]
+        : []
+
       acc[knownIndex] = {
         id: acc[knownIndex].id,
         entry: {
           ...acc[knownIndex].entry,
-          categories: [
+          categories: mergeCategories(
             ...acc[knownIndex].entry.categories,
             ...entry.entry.categories,
-          ],
+            ...prevCategories,
+          ),
         },
       }
       return acc
