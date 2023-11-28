@@ -5,10 +5,7 @@ import {
   categoriesArray,
   CategoryKey,
 } from '../src/feed/categories.ts'
-import {
-  getDisabledCategories,
-  setDisabledCategoriesCookie,
-} from '../src/cookies.ts'
+import { parsePreferencesCookie, setPreferencesCookie } from '../src/cookies.ts'
 import CategoryIndicator from '../components/CategoryIndicator.tsx'
 import Header from '../components/Header.tsx'
 
@@ -29,8 +26,8 @@ const parseDisabledCategories = (formData: FormData): CategoryKey[] => {
 }
 
 export const handler: Handlers = {
-  async GET(req, ctx) {
-    const disabledCategories = getDisabledCategories(req.headers)
+  async GET({ headers }, ctx) {
+    const { disabledCategories } = parsePreferencesCookie(headers)
     const res = await ctx.render({
       disabledCategories,
     })
@@ -41,7 +38,7 @@ export const handler: Handlers = {
 
     const headers = new Headers({ Location: '/' })
 
-    setDisabledCategoriesCookie(headers, disabledCategories)
+    setPreferencesCookie(headers, disabledCategories)
 
     return new Response('', {
       status: 303,

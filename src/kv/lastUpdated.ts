@@ -1,4 +1,4 @@
-import { difference } from 'https://deno.land/std@0.206.0/datetime/mod.ts'
+import { difference } from 'https://deno.land/std@0.208.0/datetime/mod.ts'
 import { LAST_UPDATED } from './kv.ts'
 
 export type LastUpdated = {

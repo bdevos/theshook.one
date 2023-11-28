@@ -1,70 +1,54 @@
 import {
-  type Cookie,
-  deleteCookie,
   getCookies,
   setCookie,
-} from 'https://deno.land/std@0.207.0/http/cookie.ts'
-import addMonths from 'https://deno.land/x/date_fns@v2.22.1/addMonths/index.ts'
+} from 'https://deno.land/std@0.208.0/http/cookie.ts'
+import {
+  decodeBase64,
+  encodeBase64,
+} from 'https://deno.land/std@0.208.0/encoding/base64.ts'
 import { categories, type CategoryKey } from './feed/categories.ts'
+import { addDays, parseDate } from './date.ts'
 
-const disabledCategoriesCookieName = 'disabledCategories'
-const lastVisitCookieName = 'lastVisit'
+type Preferences = {
+  disabledCategories: CategoryKey[]
+  lastVisit: Date | undefined
+}
 
-export const setDisabledCategoriesCookie = (
+const separator = ','
+const preferencesCookieName = 'user_preferences'
+
+export const setPreferencesCookie = (
   headers: Headers,
   disabledCategories: string[],
 ) => {
-  if (disabledCategories.length > 0) {
-    const disabledCategoriesCookie: Cookie = {
-      name: disabledCategoriesCookieName,
-      value: disabledCategories.join('|'),
-      httpOnly: true,
-      sameSite: 'Lax',
-      secure: true,
-      expires: addMonths(new Date(), 1),
-    }
-    setCookie(headers, disabledCategoriesCookie)
-  } else {
-    deleteCookie(headers, disabledCategoriesCookieName)
-  }
-}
-
-export const setLastVisitCookie = (headers: Headers) => {
-  const lastVisitCookie: Cookie = {
-    name: lastVisitCookieName,
-    value: new Date().toISOString(),
+  setCookie(headers, {
+    name: preferencesCookieName,
+    value: encodeBase64(
+      [new Date().toISOString(), ...disabledCategories].join(separator),
+    ),
     httpOnly: true,
-    sameSite: 'Lax',
     secure: true,
-    expires: addMonths(new Date(), 1),
-  }
-  setCookie(headers, lastVisitCookie)
+    expires: addDays(new Date(), 7),
+  })
 }
 
-export const getDisabledCategories = (
-  headers: Headers,
-): CategoryKey[] => {
-  const value = getCookies(headers)[disabledCategoriesCookieName]
+export const parsePreferencesCookie = (headers: Headers): Preferences => {
+  const value = getCookies(headers)[preferencesCookieName]
   if (!value) {
-    return []
+    return {
+      disabledCategories: [],
+      lastVisit: undefined,
+    }
   }
 
-  return value.split('|').map((category) =>
-    category in categories ? category : null
-  ).filter((category): category is CategoryKey => !!category)
-}
+  const [lastVisit, ...disabledCategories] = new TextDecoder().decode(
+    decodeBase64(value),
+  ).split(separator)
 
-export const getLastVisit = (
-  headers: Headers,
-): Date | undefined => {
-  const value = getCookies(headers)[lastVisitCookieName]
-
-  if (!value) {
-    return undefined
-  }
-
-  const asDate = new Date(value)
-  if (!isNaN(asDate.getTime())) {
-    return asDate
+  return {
+    disabledCategories: disabledCategories.map((category) =>
+      category in categories ? category : null
+    ).filter((category): category is CategoryKey => !!category),
+    lastVisit: parseDate(lastVisit),
   }
 }
