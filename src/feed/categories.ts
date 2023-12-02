@@ -20,6 +20,7 @@ export type CategoryKey =
   | 'facebook'
   | 'gadgets'
   | 'games'
+  | 'gift-guide'
   | 'google'
   | 'good-deals'
   | 'health'
@@ -76,6 +77,7 @@ export const categories: Record<CategoryKey, CategoryMeta> = {
   'film': { label: 'Film', color: '#FF1493' },
   'gadgets': { label: 'Gadgets', color: '#808080' },
   'games': { label: 'Games', color: '#FF4500' },
+  'gift-guide': { label: 'Gift Guide', color: '#FFD700' },
   'google': { label: 'Google', color: '#4285F4' },
   'health': { label: 'Health', color: '#ADD8E6' },
   'how-to': { label: 'How-to', color: '#8A2BE2' },
