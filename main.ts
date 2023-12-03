@@ -3,14 +3,15 @@
 /// <reference lib="dom.iterable" />
 /// <reference lib="dom.asynciterable" />
 /// <reference lib="deno.ns" />
+/// <reference lib="deno.unstable" />
 
-import "$std/dotenv/load.ts";
+import '$std/dotenv/load.ts'
 
-import { start } from "$fresh/server.ts";
-import manifest from "./fresh.gen.ts";
-import config from "./fresh.config.ts";
+import { start } from '$fresh/server.ts'
+import manifest from './fresh.gen.ts'
+import config from './fresh.config.ts'
 import { updateEntries } from './src/kv/update.ts'
 
 Deno.cron('Update entries', '0 * * * *', () => updateEntries())
 
-await start(manifest, config);
+await start(manifest, config)
