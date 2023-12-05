@@ -18,7 +18,6 @@ export default function ListItem({ entry, lastVisit }: Props) {
       <Time lastVisit={lastVisit} published={published} />
       <a
         href={href}
-        target='_blank'
         class='text-neutral-900 dark:text-neutral-50 visited:text-fuchsia-800 dark:visited:text-fuchsia-200 truncate text-base leading-relaxed tracking-tight sm:tracking-normal'
       >
         {title}
