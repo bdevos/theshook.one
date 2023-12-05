@@ -9,34 +9,39 @@ import { parsePreferencesCookie, setPreferencesCookie } from '../src/cookies.ts'
 import ListHeader from '../components/ListHeader.tsx'
 import ListItem from '../components/ListItem.tsx'
 
-type HomeProps = {
+type HomeState = {
   entriesByDate: Record<string, KvEntry[]>
   lastVisit: Date | undefined
   lastUpdated: LastUpdated | null
 }
 
-export const handler: Handlers<HomeProps> = {
+export const handler: Handlers<void, HomeState> = {
   async GET({ headers }, ctx) {
     const kv = await Deno.openKv()
     const { lastVisit, disabledCategories } = parsePreferencesCookie(headers)
 
-    const entriesByDate = await listEntriesByDate(kv, disabledCategories)
+    const { mostRecentEntryDate, entriesByDate } = await listEntriesByDate(
+      kv,
+      disabledCategories,
+    )
     const lastUpdated = await getLastUpdated(kv)
 
-    const res = await ctx.render({
-      lastVisit,
+    ctx.state = {
       entriesByDate,
       lastUpdated,
-    })
-    setPreferencesCookie(res.headers, disabledCategories)
+      lastVisit,
+    }
+
+    const res = await ctx.render()
+    setPreferencesCookie(res.headers, mostRecentEntryDate, disabledCategories)
 
     return res
   },
 }
 
-export default function Home(
-  { data: { lastVisit, lastUpdated, entriesByDate } }: PageProps<HomeProps>,
-) {
+export default function Home({ state }: PageProps<void, HomeState>) {
+  const { entriesByDate, lastUpdated, lastVisit } = state
+
   return (
     <>
       <Head>

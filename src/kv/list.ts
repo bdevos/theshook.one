@@ -47,11 +47,16 @@ export const listEntriesByDate = async (
     }
   }
 
-  return splitByDay(entries)
+  const sortedEntries = entries.toSorted(sortEntryByPublished)
+
+  return {
+    mostRecentEntryDate: sortedEntries.at(0)?.published ?? new Date(),
+    entriesByDate: splitByDay(sortedEntries),
+  }
 }
 
 const splitByDay = (entries: KvEntry[]) =>
   Object.groupBy(
-    entries.toSorted(sortEntryByPublished),
+    entries,
     ({ published }) => formatDay(published),
   )

@@ -19,12 +19,15 @@ const preferencesCookieName = 'user_preferences'
 
 export const setPreferencesCookie = (
   headers: Headers,
+  mostRecentEntryDate: Date,
   disabledCategories: string[],
 ) => {
   setCookie(headers, {
     name: preferencesCookieName,
     value: encodeBase64(
-      [new Date().toISOString(), ...disabledCategories].join(separator),
+      [mostRecentEntryDate.toISOString(), ...disabledCategories].join(
+        separator,
+      ),
     ),
     httpOnly: true,
     secure: true,
