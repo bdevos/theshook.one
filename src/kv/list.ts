@@ -34,6 +34,7 @@ export const listEntryCategories = async (kv: Deno.Kv) => {
 export const listEntriesByDate = async (
   kv: Deno.Kv,
   disabledCategories: CategoryKey[],
+  timeZone: string | undefined,
 ) => {
   const res = kv.list<KvEntry>({ prefix: [ENTRIES] })
   const entries: KvEntry[] = []
@@ -51,12 +52,12 @@ export const listEntriesByDate = async (
 
   return {
     mostRecentEntryDate: sortedEntries.at(0)?.published ?? new Date(),
-    entriesByDate: splitByDay(sortedEntries),
+    entriesByDate: splitByDay(sortedEntries, timeZone),
   }
 }
 
-const splitByDay = (entries: KvEntry[]) =>
+const splitByDay = (entries: KvEntry[], timeZone: string | undefined) =>
   Object.groupBy(
     entries,
-    ({ published }) => formatDay(published),
+    ({ published }) => formatDay(published, timeZone),
   )

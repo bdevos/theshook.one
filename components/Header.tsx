@@ -1,10 +1,12 @@
 import SettingsIcon from './icons/SettingsIcon.tsx'
 import { LastUpdated } from '../src/kv/lastUpdated.ts'
 import UpdatedIcon from './icons/UpdatedIcon.tsx'
+import GlobeIcon from './icons/GlobeIcon.tsx'
 
 type Props = {
   label: string
   lastUpdated?: LastUpdated | null
+  timeZone?: string
   disableSettings?: boolean
 }
 
@@ -20,8 +22,17 @@ const parseUpdated = ({ minutes, hours }: LastUpdated): string => {
   }
 }
 
+const parseTimeZone = (timeZone: string) => {
+  const formatter = new Intl.DateTimeFormat('en-US', {
+    timeZoneName: 'short',
+    timeZone,
+  })
+  return formatter.formatToParts().find(({ type }) => type === 'timeZoneName')
+    ?.value
+}
+
 export default function Header(
-  { label, lastUpdated, disableSettings = false }: Props,
+  { label, lastUpdated, disableSettings = false, timeZone }: Props,
 ) {
   return (
     <div class='flex justify-between items-center gap-x-5 mx-2 mb-2'>
@@ -32,8 +43,15 @@ export default function Header(
             {label}
           </h1>
           {lastUpdated && (
-            <div class='flex flex-row text-xs text-neutral-400 dark:text-neutral-500 gap-x-1 items-center'>
-              <UpdatedIcon /> {parseUpdated(lastUpdated)}
+            <div class='flex flex-row text-xs text-neutral-400 dark:text-neutral-500 gap-x-3 items-center'>
+              <div class='flex flex-row gap-x-1 items-center'>
+                <UpdatedIcon /> {parseUpdated(lastUpdated)}
+              </div>
+              {timeZone && (
+                <a href='/time-zone' class='flex flex-row gap-x-1 items-center'>
+                  <GlobeIcon timeZone={timeZone} /> {parseTimeZone(timeZone)}
+                </a>
+              )}
             </div>
           )}
         </div>

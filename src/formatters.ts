@@ -1,27 +1,30 @@
 import { addDays } from './date.ts'
 
-export const dateFormatter = new Intl.DateTimeFormat('en-US', {
-  month: 'short',
-  day: 'numeric',
-  timeZone: 'Europe/Amsterdam',
-})
+export const dateFormatter = (timeZone: string | undefined) =>
+  new Intl.DateTimeFormat('en-US', {
+    month: 'short',
+    day: 'numeric',
+    timeZone,
+  })
 
-export const timeFormatter = new Intl.DateTimeFormat('nl-NL', {
-  timeStyle: 'short',
-  timeZone: 'Europe/Amsterdam',
-})
+export const timeFormatter = (timeZone: string | undefined) =>
+  new Intl.DateTimeFormat('nl-NL', {
+    timeStyle: 'short',
+    timeZone,
+  })
 
-const todayAsString = dateFormatter.format(new Date())
-const yesterdayAsString = dateFormatter.format(addDays(new Date(), -1))
+export const formatDay = (date: Date, timeZone: string | undefined) => {
+  const formatter = dateFormatter(timeZone)
+  const formattedDate = formatter.format(date)
 
-export const formatDay = (date: Date) => {
-  const formattedDate = dateFormatter.format(date)
+  const todayAsString = formatter.format(new Date())
+  const yesterdayAsString = formatter.format(addDays(new Date(), -1))
 
   if (formattedDate === todayAsString) {
     return 'Today'
   } else if (formattedDate === yesterdayAsString) {
     return 'Yesterday'
   } else {
-    return dateFormatter.format(date)
+    return formatter.format(date)
   }
 }

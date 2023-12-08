@@ -1,11 +1,10 @@
-import { timeFormatter } from '../src/formatters.ts'
-
 type Props = {
   lastVisit: Date | undefined
   published: Date
+  timeFormatter: Intl.DateTimeFormat
 }
 
-export default function Time({ lastVisit, published }: Props) {
+export default function Time({ lastVisit, published, timeFormatter }: Props) {
   const isBold = lastVisit && published > lastVisit
 
   return (

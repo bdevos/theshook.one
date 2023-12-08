@@ -34,12 +34,14 @@ export const handler: Handlers<void, CategoriesState> = {
     return ctx.render()
   },
   async POST(req, _ctx) {
-    const { lastVisit = new Date() } = parsePreferencesCookie(req.headers)
+    const { lastVisit = new Date(), timeZone = '' } = parsePreferencesCookie(
+      req.headers,
+    )
     const disabledCategories = parseDisabledCategories(await req.formData())
 
     const headers = new Headers({ Location: '/' })
 
-    setPreferencesCookie(headers, lastVisit, disabledCategories)
+    setPreferencesCookie(headers, lastVisit, timeZone, disabledCategories)
 
     return new Response('', {
       status: 303,

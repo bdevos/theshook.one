@@ -8,21 +8,26 @@ import { type KvEntry } from '../src/kv/kv.ts'
 import { parsePreferencesCookie, setPreferencesCookie } from '../src/cookies.ts'
 import ListHeader from '../components/ListHeader.tsx'
 import ListItem from '../components/ListItem.tsx'
+import { timeFormatter as timeFormatterFunc } from '../src/formatters.ts'
 
 type HomeState = {
   entriesByDate: Record<string, KvEntry[]>
   lastVisit: Date | undefined
   lastUpdated: LastUpdated | null
+  timeZone: string | undefined
 }
 
 export const handler: Handlers<void, HomeState> = {
   async GET({ headers }, ctx) {
     const kv = await Deno.openKv()
-    const { lastVisit, disabledCategories } = parsePreferencesCookie(headers)
+    const { lastVisit, disabledCategories, timeZone } = parsePreferencesCookie(
+      headers,
+    )
 
     const { mostRecentEntryDate, entriesByDate } = await listEntriesByDate(
       kv,
       disabledCategories,
+      timeZone,
     )
     const lastUpdated = await getLastUpdated(kv)
 
@@ -30,6 +35,7 @@ export const handler: Handlers<void, HomeState> = {
       entriesByDate,
       lastUpdated,
       lastVisit,
+      timeZone,
     }
 
     const res = await ctx.render()
@@ -38,6 +44,7 @@ export const handler: Handlers<void, HomeState> = {
       lastVisit && lastVisit > mostRecentEntryDate
         ? lastVisit
         : mostRecentEntryDate,
+      timeZone,
       disabledCategories,
     )
 
@@ -46,7 +53,8 @@ export const handler: Handlers<void, HomeState> = {
 }
 
 export default function Home({ state }: PageProps<void, HomeState>) {
-  const { entriesByDate, lastUpdated, lastVisit } = state
+  const { entriesByDate, lastUpdated, lastVisit, timeZone } = state
+  const timeFormatter = timeFormatterFunc(timeZone)
 
   return (
     <>
@@ -54,14 +62,22 @@ export default function Home({ state }: PageProps<void, HomeState>) {
         <title>theshook.¹</title>
       </Head>
       <div class='mx-auto max-w-2xl mt-2 px-1'>
-        <Header label='The Verge Feed' lastUpdated={lastUpdated} />
+        <Header
+          label='The Verge Feed'
+          lastUpdated={lastUpdated}
+          timeZone={timeZone}
+        />
         <ul>
           {Object.entries(entriesByDate).map(([date, entries]) => (
             <>
               {date !== 'Today' && <ListHeader date={date} />}
 
               {entries.map((entry) => (
-                <ListItem entry={entry} lastVisit={lastVisit} />
+                <ListItem
+                  entry={entry}
+                  lastVisit={lastVisit}
+                  timeFormatter={timeFormatter}
+                />
               ))}
             </>
           ))}

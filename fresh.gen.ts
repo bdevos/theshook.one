@@ -7,6 +7,7 @@ import * as $_app from './routes/_app.tsx'
 import * as $about from './routes/about.tsx'
 import * as $categories from './routes/categories.tsx'
 import * as $index from './routes/index.tsx'
+import * as $time_zone from './routes/time-zone.tsx'
 
 import { type Manifest } from '$fresh/server.ts'
 
@@ -17,6 +18,7 @@ const manifest = {
     './routes/about.tsx': $about,
     './routes/categories.tsx': $categories,
     './routes/index.tsx': $index,
+    './routes/time-zone.tsx': $time_zone,
   },
   islands: {},
   baseUrl: import.meta.url,

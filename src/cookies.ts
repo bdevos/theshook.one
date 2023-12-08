@@ -12,6 +12,7 @@ import { addDays, parseDate } from './date.ts'
 type Preferences = {
   disabledCategories: CategoryKey[]
   lastVisit: Date | undefined
+  timeZone: string | undefined
 }
 
 const separator = ','
@@ -20,14 +21,20 @@ const preferencesCookieName = 'user_preferences'
 export const setPreferencesCookie = (
   headers: Headers,
   mostRecentEntryDate: Date,
+  timeZone: string | undefined,
   disabledCategories: string[],
 ) => {
   setCookie(headers, {
     name: preferencesCookieName,
     value: encodeBase64(
-      [mostRecentEntryDate.toISOString(), ...disabledCategories].join(
-        separator,
-      ),
+      [
+        mostRecentEntryDate.toISOString(),
+        timeZone ?? '',
+        ...disabledCategories,
+      ]
+        .join(
+          separator,
+        ),
     ),
     httpOnly: true,
     secure: true,
@@ -41,17 +48,24 @@ export const parsePreferencesCookie = (headers: Headers): Preferences => {
     return {
       disabledCategories: [],
       lastVisit: undefined,
+      timeZone: undefined,
     }
   }
 
-  const [lastVisit, ...disabledCategories] = new TextDecoder().decode(
-    decodeBase64(value),
-  ).split(separator)
+  const [lastVisit, cookieTimeZone, ...disabledCategories] = new TextDecoder()
+    .decode(
+      decodeBase64(value),
+    ).split(separator)
+
+  const timeZone = Intl.supportedValuesOf('timeZone').find((knownTimeZone) =>
+    knownTimeZone === cookieTimeZone
+  )
 
   return {
     disabledCategories: disabledCategories.map((category) =>
       category in categories ? category : null
     ).filter((category): category is CategoryKey => !!category),
     lastVisit: parseDate(lastVisit),
+    timeZone,
   }
 }
