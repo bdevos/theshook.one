@@ -67,21 +67,21 @@ export default function Categories(
         </p>
         <form method='post' action='/categories'>
           <div class='mt-4 divide-y divide-neutral-200 dark:divide-neutral-700'>
-            {categoriesArray().map(({ category, label }) => (
+            {categoriesArray().map(({ category, label, color }) => (
               <label
                 key={category}
-                class='flex items-center justify-between px-2'
+                class='flex items-center justify-between px-2 py-0.5'
               >
                 <div class='flex items-center gap-x-2 text-base leading-loose sm:leading-relaxed font-medium'>
                   <CategoryIndicator categories={[category]} />
                   {label}
                 </div>
                 <input
-                  name='category'
-                  value={category}
                   checked={!disabledCategories.includes(category)}
+                  class='appearance-none bg-gray-200 checked:bg-fuchsia-500 relative inline-flex h-5 w-9 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-fuchsia-500 focus:ring-offset-2 before:translate-x-0 checked:before:translate-x-4 before:pointer-events-none before:inline-block before:h-4 before:w-4 before:transform before:rounded-full before:bg-white before:shadow before:ring-0 before:transition before:duration-200 before:ease-in-out'
+                  name='category'
                   type='checkbox'
-                  class='h-4 w-4 accent-fuchsia-600'
+                  value={category}
                 />
               </label>
             ))}
