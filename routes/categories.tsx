@@ -78,7 +78,7 @@ export default function Categories(
                 </div>
                 <input
                   checked={!disabledCategories.includes(category)}
-                  class='appearance-none bg-gray-200 checked:bg-fuchsia-500 relative inline-flex h-5 w-9 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-fuchsia-500 focus:ring-offset-2 before:translate-x-0 checked:before:translate-x-4 before:pointer-events-none before:inline-block before:h-4 before:w-4 before:transform before:rounded-full before:bg-white before:shadow before:ring-0 before:transition before:duration-200 before:ease-in-out'
+                  class='appearance-none bg-gray-200 checked:bg-fuchsia-500 relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-fuchsia-500 focus:ring-offset-2 before:translate-x-0 checked:before:translate-x-5 before:pointer-events-none before:inline-block before:h-5 before:w-5 before:transform before:rounded-full before:bg-white before:shadow before:ring-0 before:transition before:duration-200 before:ease-in-out'
                   name='category'
                   type='checkbox'
                   value={category}
