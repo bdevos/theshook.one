@@ -72,7 +72,7 @@ export default function Categories(
             {categoriesArray().map(({ category, label }) => (
               <label
                 key={category}
-                class='flex items-center justify-between px-2 py-0.25'
+                class='flex items-center justify-between px-2 py-0.25 sm:py-1'
               >
                 <div class='flex items-center gap-x-2 text-base leading-loose sm:leading-relaxed font-medium'>
                   <CategoryIndicator categories={[category]} />
@@ -89,7 +89,7 @@ export default function Categories(
             ))}
           </div>
           <div class='sticky bottom-0 -mx-1 px-1 backdrop-blur-sm bg-neutral-50/50 dark:bg-black/25'>
-            <div class='flex flex-row  py-3 px-2 gap-x-2 justify-end'>
+            <div class='flex flex-row py-3 px-2 gap-x-2 justify-end'>
               <a
                 href='/'
                 type='button'
