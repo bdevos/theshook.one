@@ -22,7 +22,7 @@ const parseUpdated = ({ minutes, hours }: LastUpdated): string => {
   }
 }
 
-const parseTimeZone = (timeZone: string) => {
+const parseTimeZone = (timeZone: string | undefined) => {
   const formatter = new Intl.DateTimeFormat('en-US', {
     timeZoneName: 'short',
     timeZone,
@@ -47,11 +47,9 @@ export default function Header(
               <div class='flex flex-row gap-x-1 items-center'>
                 <UpdatedIcon /> {parseUpdated(lastUpdated)}
               </div>
-              {timeZone && (
-                <a href='/time-zone' class='flex flex-row gap-x-1 items-center'>
-                  <GlobeIcon timeZone={timeZone} /> {parseTimeZone(timeZone)}
-                </a>
-              )}
+              <a href='/time-zone' class='flex flex-row gap-x-1 items-center'>
+                <GlobeIcon timeZone={timeZone} /> {parseTimeZone(timeZone)}
+              </a>
             </div>
           )}
         </div>

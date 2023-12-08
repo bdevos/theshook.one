@@ -1,8 +1,8 @@
 type Props = {
-  timeZone: string
+  timeZone: string | undefined
 }
 
-export default function GlobeIcon({ timeZone }: Props) {
+export default function GlobeIcon({ timeZone = '' }: Props) {
   if (timeZone.startsWith('America/')) {
     return <GlobeAmericas />
   }
