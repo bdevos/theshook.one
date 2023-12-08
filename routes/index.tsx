@@ -33,7 +33,13 @@ export const handler: Handlers<void, HomeState> = {
     }
 
     const res = await ctx.render()
-    setPreferencesCookie(res.headers, mostRecentEntryDate, disabledCategories)
+    setPreferencesCookie(
+      res.headers,
+      lastVisit && lastVisit > mostRecentEntryDate
+        ? lastVisit
+        : mostRecentEntryDate,
+      disabledCategories,
+    )
 
     return res
   },
