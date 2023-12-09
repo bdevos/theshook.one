@@ -1,7 +1,4 @@
-import {
-  categories as categoriesObject,
-  CategoryKey,
-} from '../src/feed/categories.ts'
+import { categories as categoriesObject, CategoryKey } from '../src/feed/categories.ts'
 
 type Props = {
   categories: CategoryKey[]
@@ -40,9 +37,7 @@ const getSegments = (colors: string[]) => {
     const pathData = `
       M ${radius} ${radius}
       L ${x1} ${y1}
-      A ${radius} ${radius} 0 ${
-      endAngle - startAngle > 180 ? 1 : 0
-    } 1 ${x2} ${y2}
+      A ${radius} ${radius} 0 ${endAngle - startAngle > 180 ? 1 : 0} 1 ${x2} ${y2}
       Z
     `
 

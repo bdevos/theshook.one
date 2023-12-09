@@ -20,15 +20,9 @@ type HomeState = {
 export const handler: Handlers<void, HomeState> = {
   async GET({ headers }, ctx) {
     const kv = await Deno.openKv()
-    const { lastVisit, disabledCategories, timeZone } = parsePreferencesCookie(
-      headers,
-    )
+    const { lastVisit, disabledCategories, timeZone } = parsePreferencesCookie(headers)
 
-    const { mostRecentEntryDate, entriesByDate } = await listEntriesByDate(
-      kv,
-      disabledCategories,
-      timeZone,
-    )
+    const { mostRecentEntryDate, entriesByDate } = await listEntriesByDate(kv, disabledCategories, timeZone)
     const lastUpdated = await getLastUpdated(kv)
 
     ctx.state = {
@@ -39,11 +33,10 @@ export const handler: Handlers<void, HomeState> = {
     }
 
     const res = await ctx.render()
+
     setPreferencesCookie(
       res.headers,
-      lastVisit && lastVisit > mostRecentEntryDate
-        ? lastVisit
-        : mostRecentEntryDate,
+      lastVisit && lastVisit > mostRecentEntryDate ? lastVisit : mostRecentEntryDate,
       timeZone,
       disabledCategories,
     )

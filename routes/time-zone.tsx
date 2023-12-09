@@ -18,21 +18,12 @@ export const handler: Handlers<void, TimeZoneState> = {
     return ctx.render()
   },
   async POST(req, _ctx) {
-    const {
-      disabledCategories,
-      lastVisit = new Date(),
-      timeZone: prevTimeZone,
-    } = parsePreferencesCookie(req.headers)
+    const { disabledCategories, lastVisit = new Date(), timeZone: prevTimeZone } = parsePreferencesCookie(req.headers)
 
     const formData = await req.formData()
-    const formDataTimeZone = formData.get('timeZone')?.toString().replaceAll(
-      ' ',
-      '_',
-    )
+    const formDataTimeZone = formData.get('timeZone')?.toString().replaceAll(' ', '_')
 
-    const timeZone = Intl.supportedValuesOf('timeZone').find((timeZone) =>
-      timeZone === formDataTimeZone
-    )
+    const timeZone = Intl.supportedValuesOf('timeZone').find((timeZone) => timeZone === formDataTimeZone)
 
     const headers = new Headers({ Location: '/' })
 
@@ -63,11 +54,9 @@ export default function TimeZone(
       <div class='mx-auto max-w-2xl mt-2 px-1 relative'>
         <Header label='Time Zone' disableSettings />
         <p class='mt-2 text-sm mx-2'>
-          This page uses the half baked{' '}
-          <span class='font-mono'>{'<input list="">'}</span> with a{' '}
+          This page uses the half baked <span class='font-mono'>{'<input list="">'}</span> with a{' '}
           <span class='font-mono'>{'<datalist />'}</span>{' '}
-          functionality. Because there is limited styling support, I haven't
-          really tried here 😇.
+          functionality. Because there is limited styling support, I haven't really tried here 😇.
         </p>
         <form method='post' action='/time-zone'>
           <div class='mt-4 mx-2 mb-2'>
@@ -83,9 +72,7 @@ export default function TimeZone(
               />
             </label>
             <datalist id='timeZones' class='border-2 border-red-500'>
-              {timeZones.map((timeZone) => (
-                <option key={timeZone}>{timeZone.replaceAll('_', ' ')}</option>
-              ))}
+              {timeZones.map((timeZone) => <option key={timeZone}>{timeZone.replaceAll('_', ' ')}</option>)}
             </datalist>
           </div>
           <div class='sticky bottom-0 -mx-1 px-1 backdrop-blur-sm bg-neutral-50/50 dark:bg-black/25'>

@@ -1,7 +1,6 @@
 # theshook.one
 
-Project to list articles from theverge.com by aggregating their RSS feeds for
-different categories / tags.
+Project to list articles from theverge.com by aggregating their RSS feeds for different categories / tags.
 
 ## Usage
 

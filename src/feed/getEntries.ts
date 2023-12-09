@@ -1,10 +1,5 @@
 import { parseFeed } from 'https://deno.land/x/rss@0.5.8/mod.ts'
-import {
-  categoriesArray,
-  type CategoryKey,
-  mergeCategories,
-  theVergeFeedUrl,
-} from './categories.ts'
+import { categoriesArray, type CategoryKey, mergeCategories, theVergeFeedUrl } from './categories.ts'
 import { type FeedEntry } from 'https://deno.land/x/rss@0.5.8/src/types/mod.ts'
 import { type KvEntryId } from '../kv/kv.ts'
 
@@ -35,9 +30,7 @@ const deduplicateCategories = (
   return entries.reduce((acc, entry) => {
     const knownIndex = acc.findIndex(({ id }) => entry.id === id)
     if (knownIndex >= 0) {
-      const prevCategories = acc[knownIndex].id in prevEntryCategories
-        ? prevEntryCategories[acc[knownIndex].id]
-        : []
+      const prevCategories = acc[knownIndex].id in prevEntryCategories ? prevEntryCategories[acc[knownIndex].id] : []
 
       acc[knownIndex] = {
         id: acc[knownIndex].id,

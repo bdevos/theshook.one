@@ -1,11 +1,5 @@
-import {
-  getCookies,
-  setCookie,
-} from 'https://deno.land/std@0.208.0/http/cookie.ts'
-import {
-  decodeBase64,
-  encodeBase64,
-} from 'https://deno.land/std@0.208.0/encoding/base64.ts'
+import { getCookies, setCookie } from 'https://deno.land/std@0.208.0/http/cookie.ts'
+import { decodeBase64, encodeBase64 } from 'https://deno.land/std@0.208.0/encoding/base64.ts'
 import { categories, type CategoryKey } from './feed/categories.ts'
 import { addDays, parseDate } from './date.ts'
 
@@ -57,14 +51,12 @@ export const parsePreferencesCookie = (headers: Headers): Preferences => {
       decodeBase64(value),
     ).split(separator)
 
-  const timeZone = Intl.supportedValuesOf('timeZone').find((knownTimeZone) =>
-    knownTimeZone === cookieTimeZone
-  )
+  const timeZone = Intl.supportedValuesOf('timeZone').find((knownTimeZone) => knownTimeZone === cookieTimeZone)
 
   return {
-    disabledCategories: disabledCategories.map((category) =>
-      category in categories ? category : null
-    ).filter((category): category is CategoryKey => !!category),
+    disabledCategories: disabledCategories.map((category) => category in categories ? category : null).filter((
+      category,
+    ): category is CategoryKey => !!category),
     lastVisit: parseDate(lastVisit),
     timeZone,
   }

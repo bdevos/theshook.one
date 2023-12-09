@@ -1,10 +1,6 @@
 import { Handlers, PageProps } from '$fresh/server.ts'
 import { Head } from '$fresh/runtime.ts'
-import {
-  categories,
-  categoriesArray,
-  CategoryKey,
-} from '../src/feed/categories.ts'
+import { categories, categoriesArray, CategoryKey } from '../src/feed/categories.ts'
 import { parsePreferencesCookie, setPreferencesCookie } from '../src/cookies.ts'
 import CategoryIndicator from '../components/CategoryIndicator.tsx'
 import Header from '../components/Header.tsx'
@@ -34,25 +30,18 @@ export const handler: Handlers<void, CategoriesState> = {
     return ctx.render()
   },
   async POST(req, _ctx) {
-    const { lastVisit = new Date(), timeZone = '' } = parsePreferencesCookie(
-      req.headers,
-    )
+    const { lastVisit = new Date(), timeZone = '' } = parsePreferencesCookie(req.headers)
     const disabledCategories = parseDisabledCategories(await req.formData())
 
     const headers = new Headers({ Location: '/' })
 
     setPreferencesCookie(headers, lastVisit, timeZone, disabledCategories)
 
-    return new Response('', {
-      status: 303,
-      headers,
-    })
+    return new Response('', { status: 303, headers })
   },
 }
 
-export default function Categories(
-  { state }: PageProps<void, CategoriesState>,
-) {
+export default function Categories({ state }: PageProps<void, CategoriesState>) {
   const { disabledCategories } = state
 
   return (
@@ -63,9 +52,8 @@ export default function Categories(
       <div class='mx-auto max-w-2xl mt-2 px-1 relative'>
         <Header label='Categories' disableSettings />
         <p class='mt-2 text-sm mx-2'>
-          When you disable a category, it will be filtered out of the results
-          with priority. So, if you only disable 'Elon Musk,' it will no longer
-          show an article tagged with both 'Tech' and 'Elon Musk'.
+          When you disable a category, it will be filtered out of the results with priority. So, if you only disable
+          'Elon Musk,' it will no longer show an article tagged with both 'Tech' and 'Elon Musk'.
         </p>
         <form method='post' action='/categories'>
           <div class='mt-4 divide-y divide-neutral-200 dark:divide-neutral-700'>

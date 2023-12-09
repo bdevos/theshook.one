@@ -119,11 +119,9 @@ export const categoriesArray = (): {
   })
 }
 
-export const mergeCategories = (...categories: CategoryKey[]) =>
-  Array.from(new Set(categories.flatMap((cat) => cat)))
+export const mergeCategories = (...categories: CategoryKey[]) => Array.from(new Set(categories.flatMap((cat) => cat)))
 
 export const theVergeFeedUrl = (
   category: CategoryKey,
   hash: string | null = null,
-) =>
-  `https://www.theverge.com/rss/${category}/index.xml${!hash ? '' : `?${hash}`}`
+) => `https://www.theverge.com/rss/${category}/index.xml${!hash ? '' : `?${hash}`}`

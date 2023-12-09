@@ -9,7 +9,7 @@
     "build": "deno run -A --unstable dev.ts build",
     "preview": "deno run -A --unstable main.ts"
   },
-  "fmt": { "semiColons": false, "singleQuote": true },
+  "fmt": { "lineWidth": 120, "semiColons": false, "singleQuote": true },
   "lint": { "rules": { "tags": ["fresh", "recommended"] } },
   "imports": {
     "$fresh/": "https://deno.land/x/fresh@1.6.1/",

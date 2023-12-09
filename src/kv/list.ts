@@ -2,8 +2,7 @@ import { CategoryKey } from '../feed/categories.ts'
 import { formatDay } from '../formatters.ts'
 import { ENTRIES, KvEntry } from './kv.ts'
 
-const sortEntryByPublished = (a: KvEntry, b: KvEntry) =>
-  b.published.getTime() - a.published.getTime()
+const sortEntryByPublished = (a: KvEntry, b: KvEntry) => b.published.getTime() - a.published.getTime()
 
 /**
  * When updating feed entries, we were first parsing all the feeds, then bundling the categories and lastly overriding all the data in KV.
@@ -40,9 +39,7 @@ export const listEntriesByDate = async (
   const entries: KvEntry[] = []
   for await (const { value } of res) {
     if (
-      !value.categories.some((category) =>
-        disabledCategories.includes(category)
-      )
+      !value.categories.some((category) => disabledCategories.includes(category))
     ) {
       entries.push(value)
     }
