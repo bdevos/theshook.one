@@ -54,6 +54,7 @@ export type CategoryKey =
 type CategoryMeta = {
   label: string
   color: string
+  header?: 'Newsletters'
 }
 
 export const categories: Record<CategoryKey, CategoryMeta> = {
@@ -108,21 +109,23 @@ export const categories: Record<CategoryKey, CategoryMeta> = {
   'twitter': { label: 'Twitter', color: '#1DA1F2' },
   'wearables': { label: 'Wearable', color: '#40E0D0' },
   'youtube': { label: 'Youtube', color: '#FF0000' },
-  'command-line-newsletter': { label: 'Newsletter: Command Line', color: '#4CAF50' },
-  'hot-pod-newsletter': { label: 'Newsletter: Hot Pod', color: '#FF5722' },
-  'installer-newsletter': { label: 'Newsletter: Installer', color: '#2196F3' },
+  'command-line-newsletter': { label: 'Command Line', color: '#4CAF50', header: 'Newsletters' },
+  'hot-pod-newsletter': { label: 'Hot Pod', color: '#FF5722', header: 'Newsletters' },
+  'installer-newsletter': { label: 'Installer', color: '#2196F3', header: 'Newsletters' },
 } as const
 
 export const categoriesArray = (): {
   category: CategoryKey
   label: string
   color: string
+  header: string | undefined
 }[] => {
-  return Object.entries(categories).map(([category, { label, color }]) => {
+  return Object.entries(categories).map(([category, { label, color, header }]) => {
     return {
       category: category as CategoryKey,
       label,
       color,
+      header,
     }
   })
 }

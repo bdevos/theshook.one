@@ -4,6 +4,7 @@ import { categories, categoriesArray, CategoryKey } from '../src/feed/categories
 import { parsePreferencesCookie, setPreferencesCookie } from '../src/cookies.ts'
 import CategoryIndicator from '../components/CategoryIndicator.tsx'
 import Header from '../components/Header.tsx'
+import { Fragment } from 'preact'
 
 type CategoriesState = {
   disabledCategories: CategoryKey[]
@@ -51,31 +52,40 @@ export default function Categories({ state }: PageProps<void, CategoriesState>) 
       </Head>
       <div class='mx-auto max-w-2xl mt-2 px-1 relative'>
         <Header label='Categories' disableSettings />
-        <p class='mt-2 text-sm mx-2'>
+        <p class='mt-2 text-sm mx-2 mb-4'>
           When you disable a category, it will be filtered out of the results with priority. So, if you only disable
           'Elon Musk,' it will no longer show an article tagged with both 'Tech' and 'Elon Musk'.
         </p>
         <form method='post' action='/categories'>
-          <div class='mt-4 divide-y divide-neutral-200 dark:divide-neutral-700'>
-            {categoriesArray().map(({ category, label }) => (
-              <label
-                key={category}
-                class='flex items-center justify-between px-2 py-0.25 sm:py-1'
-              >
-                <div class='flex items-center gap-x-2 text-base leading-loose sm:leading-relaxed font-medium'>
-                  <CategoryIndicator categories={[category]} />
-                  {label}
-                </div>
-                <input
-                  checked={!disabledCategories.includes(category)}
-                  class='appearance-none bg-gray-200 checked:bg-fuchsia-500 relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-fuchsia-500 focus:ring-offset-2 before:translate-x-0 checked:before:translate-x-5 before:pointer-events-none before:inline-block before:h-5 before:w-5 before:transform before:rounded-full before:bg-white before:shadow before:ring-0 before:transition before:duration-200 before:ease-in-out'
-                  name='category'
-                  type='checkbox'
-                  value={category}
-                />
-              </label>
-            ))}
-          </div>
+          {Object.entries(Object.groupBy(categoriesArray(), ({ header }) => header ?? 'root')).map((
+            [header, categories],
+          ) => (
+            <Fragment key={header}>
+              {header !== 'root' && (
+                <h2 class='text-lg leading-loose sm:leading-relaxed font-bold mt-2 ml-1.5'>{header}</h2>
+              )}
+              <div class='divide-y divide-neutral-200 dark:divide-neutral-700'>
+                {categories.map(({ category, label }) => (
+                  <label
+                    key={category}
+                    class='flex items-center justify-between px-2 py-0.25 sm:py-1'
+                  >
+                    <div class='flex items-center gap-x-2 text-base leading-loose sm:leading-relaxed font-medium'>
+                      <CategoryIndicator categories={[category]} />
+                      {label}
+                    </div>
+                    <input
+                      checked={!disabledCategories.includes(category)}
+                      class='appearance-none bg-gray-200 checked:bg-fuchsia-500 relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-fuchsia-500 focus:ring-offset-2 before:translate-x-0 checked:before:translate-x-5 before:pointer-events-none before:inline-block before:h-5 before:w-5 before:transform before:rounded-full before:bg-white before:shadow before:ring-0 before:transition before:duration-200 before:ease-in-out'
+                      name='category'
+                      type='checkbox'
+                      value={category}
+                    />
+                  </label>
+                ))}
+              </div>
+            </Fragment>
+          ))}
           <div class='sticky bottom-0 -mx-1 px-1 backdrop-blur-sm bg-neutral-50/50 dark:bg-black/25'>
             <div class='flex flex-row py-3 px-2 gap-x-2 justify-end'>
               <a
