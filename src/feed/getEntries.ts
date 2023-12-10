@@ -69,7 +69,7 @@ const getEntriesByCategory = async (category: CategoryKey) => {
   try {
     const xml = await getXmlWithRetry(category) ?? ''
     const { entries } = await parseFeed(xml)
-    return entries
+    return entries ?? []
   } catch {
     // The feed lookup seems to fail every once in a while, when that is the case the server responds with
     // content-length: 0

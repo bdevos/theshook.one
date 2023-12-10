@@ -29,6 +29,7 @@ export type CategoryKey =
   | 'keyboards'
   | 'meta'
   | 'microsoft'
+  | 'podcast'
   | 'policy'
   | 'politics'
   | 'regulation'
@@ -46,6 +47,9 @@ export type CategoryKey =
   | 'twitter'
   | 'wearables'
   | 'youtube'
+  | 'command-line-newsletter'
+  | 'hot-pod-newsletter'
+  | 'installer-newsletter'
 
 type CategoryMeta = {
   label: string
@@ -85,6 +89,7 @@ export const categories: Record<CategoryKey, CategoryMeta> = {
   'keyboards': { label: 'Keyboards', color: '#333333' },
   'meta': { label: 'Meta', color: '#800000' },
   'microsoft': { label: 'Microsoft', color: '#00ADEF' },
+  'podcast': { label: 'Podcast', color: '#336699' },
   'policy': { label: 'Policy', color: '#800000' },
   'politics': { label: 'Politics', color: '#000080' },
   'regulation': { label: 'Regulation', color: '#00008B' },
@@ -103,6 +108,9 @@ export const categories: Record<CategoryKey, CategoryMeta> = {
   'twitter': { label: 'Twitter', color: '#1DA1F2' },
   'wearables': { label: 'Wearable', color: '#40E0D0' },
   'youtube': { label: 'Youtube', color: '#FF0000' },
+  'command-line-newsletter': { label: 'Newsletter: Command Line', color: '#4CAF50' },
+  'hot-pod-newsletter': { label: 'Newsletter: Hot Pod', color: '#FF5722' },
+  'installer-newsletter': { label: 'Newsletter: Installer', color: '#2196F3' },
 } as const
 
 export const categoriesArray = (): {
