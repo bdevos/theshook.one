@@ -2,12 +2,12 @@
   "lock": false,
   "tasks": {
     "check": "deno fmt --check && deno lint && deno check **/*.ts && deno check **/*.tsx",
-    "deleteEntries": "deno run -A --unstable entries.ts delete",
-    "updateEntries": "deno run -A --unstable entries.ts update",
-    "start": "deno run -A --unstable --watch=static/,routes/ dev.ts",
+    "deleteEntries": "deno run -A --unstable-kv entries.ts delete",
+    "updateEntries": "deno run -A --unstable-kv entries.ts update",
+    "start": "deno run -A --unstable-kv --watch=static/,routes/ dev.ts",
     "update": "deno run -A -r https://fresh.deno.dev/update .",
-    "build": "deno run -A --unstable dev.ts build",
-    "preview": "deno run -A --unstable main.ts"
+    "build": "deno run -A --unstable-kv dev.ts build",
+    "preview": "deno run -A --unstable-kv main.ts"
   },
   "fmt": { "lineWidth": 120, "semiColons": false, "singleQuote": true },
   "lint": { "rules": { "tags": ["fresh", "recommended"] } },
