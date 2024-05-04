@@ -7,7 +7,7 @@
     "start": "deno run -A --unstable-kv --watch=static/,routes/ dev.ts",
     "update": "deno run -A -r https://fresh.deno.dev/update .",
     "build": "deno run -A --unstable-kv dev.ts build",
-    "preview": "deno run -A --unstable-kv main.ts"
+    "preview": "deno run -A --unstable-kv --unstable-cron main.ts"
   },
   "fmt": { "lineWidth": 120, "semiColons": false, "singleQuote": true },
   "lint": { "rules": { "tags": ["fresh", "recommended"] } },
