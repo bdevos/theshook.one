@@ -65,7 +65,7 @@ export default function Categories({ state }: PageProps<void, CategoriesState>) 
                 <h2 class='text-lg leading-loose sm:leading-relaxed font-bold mt-2 ml-1.5'>{header}</h2>
               )}
               <div class='divide-y divide-neutral-200 dark:divide-neutral-700'>
-                {categories.map(({ category, label }) => (
+                {categories?.map(({ category, label }) => (
                   <label
                     key={category}
                     class='flex items-center justify-between px-2 py-0.25 sm:py-1'

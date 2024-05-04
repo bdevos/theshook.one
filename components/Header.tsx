@@ -59,6 +59,7 @@ export default function Header(
           type='button'
           href='/categories'
           class='inline-flex items-center gap-x-1.5 rounded-md bg-neutral-200 dark:bg-neutral-800 px-2.5 py-1.5 text-xs font-semibold shadow-sm hover:bg-neutral-300 dark:hover:bg-neutral-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fuchsia-500'
+          aria-label='Categories'
         >
           <SettingsIcon aria-hidden='true' />
         </a>
