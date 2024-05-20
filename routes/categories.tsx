@@ -31,18 +31,20 @@ export const handler: Handlers<void, CategoriesState> = {
     return ctx.render()
   },
   async POST(req, _ctx) {
-    const { lastVisit = new Date(), timeZone = '' } = parsePreferencesCookie(req.headers)
+    const { lastVisit = new Date() } = parsePreferencesCookie(req.headers)
     const disabledCategories = parseDisabledCategories(await req.formData())
 
     const headers = new Headers({ Location: '/' })
 
-    setPreferencesCookie(headers, lastVisit, timeZone, disabledCategories)
+    setPreferencesCookie(headers, lastVisit, disabledCategories)
 
     return new Response('', { status: 303, headers })
   },
 }
 
-export default function Categories({ state }: PageProps<void, CategoriesState>) {
+export default function Categories({
+  state,
+}: PageProps<void, CategoriesState>) {
   const { disabledCategories } = state
 
   return (

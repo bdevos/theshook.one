@@ -31,9 +31,12 @@ const parseTimeZone = (timeZone: string | undefined) => {
     ?.value
 }
 
-export default function Header(
-  { label, lastUpdated, disableSettings = false, timeZone }: Props,
-) {
+export default function Header({
+  label,
+  lastUpdated,
+  disableSettings = false,
+  timeZone,
+}: Props) {
   return (
     <div class='flex justify-between items-center gap-x-5 mx-2 mb-2'>
       <div class='flex items-center gap-x-3'>
@@ -47,9 +50,9 @@ export default function Header(
               <div class='flex flex-row gap-x-1 items-center'>
                 <UpdatedIcon /> {parseUpdated(lastUpdated)}
               </div>
-              <a href='/time-zone' class='flex flex-row gap-x-1 items-center'>
+              <div class='flex flex-row gap-x-1 items-center'>
                 <GlobeIcon timeZone={timeZone} /> {parseTimeZone(timeZone)}
-              </a>
+              </div>
             </div>
           )}
         </div>

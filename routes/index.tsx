@@ -9,6 +9,7 @@ import { parsePreferencesCookie, setPreferencesCookie } from '../src/cookies.ts'
 import ListHeader from '../components/ListHeader.tsx'
 import ListItem from '../components/ListItem.tsx'
 import { timeFormatter as timeFormatterFunc } from '../src/formatters.ts'
+import { parseTimeZone } from '../src/parseTimeZone.ts'
 
 type HomeState = {
   entriesByDate: Record<string, KvEntry[]>
@@ -20,9 +21,14 @@ type HomeState = {
 export const handler: Handlers<void, HomeState> = {
   async GET({ headers }, ctx) {
     const kv = await Deno.openKv()
-    const { lastVisit, disabledCategories, timeZone } = parsePreferencesCookie(headers)
+    const { lastVisit, disabledCategories } = parsePreferencesCookie(headers)
+    const timeZone = parseTimeZone(headers)
 
-    const { mostRecentEntryDate, entriesByDate } = await listEntriesByDate(kv, disabledCategories, timeZone)
+    const { mostRecentEntryDate, entriesByDate } = await listEntriesByDate(
+      kv,
+      disabledCategories,
+      timeZone,
+    )
     const lastUpdated = await getLastUpdated(kv)
 
     ctx.state = {
@@ -37,7 +43,6 @@ export const handler: Handlers<void, HomeState> = {
     setPreferencesCookie(
       res.headers,
       lastVisit && lastVisit > mostRecentEntryDate ? lastVisit : mostRecentEntryDate,
-      timeZone,
       disabledCategories,
     )
 
