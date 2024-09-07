@@ -9,8 +9,8 @@ export default function Time({ lastVisit, published, timeFormatter }: Props) {
 
   return (
     <span
-      class={`text-xs font-mono tabular-nums tracking-tighter ${
-        isBold ? 'font-bold' : 'font-normal text-neutral-700 dark:text-neutral-200'
+      class={`font-mono text-xs tabular-nums tracking-tighter mx-1 ${
+        isBold ? 'font-semibold' : 'font-normal text-neutral-600 dark:text-neutral-300'
       }`}
     >
       {timeFormatter.format(published)}

@@ -59,13 +59,13 @@ export default function Home({ state }: PageProps<void, HomeState>) {
       <Head>
         <title>theshook.¹</title>
       </Head>
-      <div class='mx-auto max-w-2xl mt-2 px-1'>
+      <div class='mx-auto max-w-3xl mt-2 mb-1 px-1'>
         <Header
           label='The Verge Feed'
           lastUpdated={lastUpdated}
           timeZone={timeZone}
         />
-        <ul>
+        <ul class='grid grid-cols-main items-baseline gap-1'>
           {Object.entries(entriesByDate).map(([date, entries]) => (
             <>
               {date !== 'Today' && <ListHeader date={date} />}

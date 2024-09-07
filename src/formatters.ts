@@ -2,7 +2,7 @@ import { addDays } from './date.ts'
 
 export const dateFormatter = (timeZone: string | undefined) =>
   new Intl.DateTimeFormat('en-US', {
-    month: 'short',
+    month: 'long',
     day: 'numeric',
     timeZone,
   })
