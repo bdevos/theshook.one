@@ -21,7 +21,7 @@ export default function ListItem({ entry, lastVisit, timeFormatter }: Props) {
       />
       <a
         href={href}
-        class='text-neutral-900 dark:text-neutral-50 visited:text-fuchsia-800 dark:visited:text-fuchsia-200 text-base text-pretty leading-tight tracking-tight sm:tracking-normal'
+        class='text-neutral-900 dark:text-neutral-50 visited:text-fuchsia-800 dark:visited:text-fuchsia-200 text-base text-balance leading-tight tracking-tight sm:tracking-normal'
       >
         {title}
       </a>
