@@ -70,7 +70,7 @@ export default function Categories({
                 {categories?.map(({ category, label }) => (
                   <label
                     key={category}
-                    class='flex items-center justify-between px-2'
+                    class='flex items-center justify-between px-2 py-0.25 sm:py-1'
                   >
                     <div class='flex items-center gap-x-2 text-base leading-loose sm:leading-relaxed font-medium'>
                       <CategoryIndicator categories={[category]} />
