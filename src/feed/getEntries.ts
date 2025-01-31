@@ -103,7 +103,7 @@ const toKvEntry = (
   }
 
   return {
-    id,
+    id: id ?? href,
     entry: { categories: [category], href, title, published },
   };
 };
