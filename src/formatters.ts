@@ -38,6 +38,7 @@ export const decodeTitle = (title: string): string => {
     .replace(/&quot;/g, '"') // Double quote
     .replace(/&apos;/g, "'") // Single quote
     .replace(/&amp;/g, "&") // Ampersand
+    .replace(/&#038;/g, "&") // Ampersand
     .replace(/&lt;/g, "<") // Less than
     .replace(/&gt;/g, ">"); // Greater than
 };
