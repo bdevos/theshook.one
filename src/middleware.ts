@@ -11,11 +11,22 @@ export const onRequest = defineMiddleware(async (context, next) => {
   const raw = context.cookies.get(COOKIE_NAME)?.value
   if (raw) {
     try {
-      // store as JSON so you can easily add more prefs later
       const parsed = JSON.parse(raw)
-      if (parsed?.lastVisit) previousVisit = new Date(parsed.lastVisit)
+      if (parsed?.lastVisit) {
+        const d = new Date(parsed.lastVisit)
+        if (!Number.isNaN(d.getTime())) previousVisit = d
+      }
     } catch {
-      // if it wasn't JSON for some reason, ignore/repair on write below
+      // ignore bad cookie; will be repaired on write
+    }
+  }
+
+  // 1b) Optional override via query param: ?lastVisit=2025-08-01T12:00:00.000Z
+  const override = context.url.searchParams.get('lastVisit')
+  if (override) {
+    const d = new Date(override)
+    if (!Number.isNaN(d.getTime())) {
+      previousVisit = d
     }
   }
 

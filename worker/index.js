@@ -209,7 +209,6 @@ async function handleUpdateRequest(env) {
           retryAfterSeconds: Math.ceil((60_000 - deltaMs) / 1000),
         }),
         {
-          status: 429,
           headers: {
             'content-type': 'application/json; charset=utf-8',
             'cache-control': 'no-store',
