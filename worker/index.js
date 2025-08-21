@@ -147,14 +147,7 @@ async function getAppjeniksaan() {
   }))
 }
 
-/** ---------- Update orchestration ---------- */
-
 async function updateFeedsData(env) {
-  // First we write the last-updated, this will make sure that if multiple requests happen
-  // via the API endpoint the chances are higher that it will be within the 60 seconds and
-  // stop the other call from going further.
-  env.THE_SHOOK_ONE.put('last-updated', new Date().toISOString())
-
   const knownKeys = await getKnownKeys(env)
 
   // Make feeds independent: failure of one won't block the other
@@ -184,78 +177,14 @@ async function updateFeedsData(env) {
       expirationTtl: ttl,
     })
   )
+  writes.push(env.THE_SHOOK_ONE.put('last-updated', new Date().toISOString()))
+
   await Promise.all(writes)
-
-  return {
-    added: readyToStore.length,
-    totalFetched: deduped.length,
-  }
-}
-
-/** ---------- HTTP + Cron entrypoints ---------- */
-
-async function handleUpdateRequest(env) {
-  // Throttle: only allow if the previous update is > 60s ago
-  const last = await env.THE_SHOOK_ONE.get('last-updated')
-  if (last) {
-    const lastDate = new Date(last)
-    const deltaMs = Date.now() - lastDate.getTime()
-    if (!Number.isNaN(lastDate.getTime()) && deltaMs < 60_000) {
-      return new Response(
-        JSON.stringify({
-          ok: false,
-          reason: 'throttled',
-          lastUpdated: lastDate.toISOString(),
-          retryAfterSeconds: Math.ceil((60_000 - deltaMs) / 1000),
-        }),
-        {
-          headers: {
-            'content-type': 'application/json; charset=utf-8',
-            'cache-control': 'no-store',
-          },
-        }
-      )
-    }
-  }
-
-  try {
-    const result = await updateFeedsData(env)
-    return new Response(
-      JSON.stringify({
-        ok: true,
-        updatedAt: new Date().toISOString(),
-        ...result,
-      }),
-      {
-        headers: {
-          'content-type': 'application/json; charset=utf-8',
-          'cache-control': 'no-store',
-        },
-      }
-    )
-  } catch (err) {
-    return new Response(
-      JSON.stringify({ ok: false, error: String(err?.message || err) }),
-      {
-        status: 500,
-        headers: { 'content-type': 'application/json; charset=utf-8' },
-      }
-    )
-  }
 }
 
 export default {
-  async scheduled(controller, env, ctx) {
+  async scheduled(_, env, ctx) {
     ctx.waitUntil(updateFeedsData(env))
   },
-
-  async fetch(request, env, ctx) {
-    const url = new URL(request.url)
-
-    if (url.pathname === '/api/update-feeds') {
-      return handleUpdateRequest(env)
-    }
-
-    return astroWorker.fetch(request, env, ctx)
-  },
+  fetch: astroWorker.fetch,
 }
