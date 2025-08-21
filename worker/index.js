@@ -172,21 +172,24 @@ async function updateFeedsData(env) {
 
   // Only new items (compare against the actual KV key, not just id)
   const newLinks = deduped.filter((l) => !knownKeys.has(toKvKey(l)))
-
-  // Write to KV with proper TTL; skip expired/near-expired items
-  const writes = []
+  const readyToStore = []
   for (const link of newLinks) {
     const ttl = calculateExpirationTtl(link.pubDate)
-    if (ttl === 0) continue
-    writes.push(
-      env.THE_SHOOK_ONE.put(toKvKey(link), toKvString(link), {
-        expirationTtl: ttl,
-      })
-    )
+    if (ttl > 0) readyToStore.push({ link, ttl })
   }
+
+  // Write to KV with proper TTL; skip expired/near-expired items
+  const writes = readyToStore.map(({ link, ttl }) =>
+    env.THE_SHOOK_ONE.put(toKvKey(link), toKvString(link), {
+      expirationTtl: ttl,
+    })
+  )
   await Promise.all(writes)
 
-  return { added: newLinks.length, totalFetched: deduped.length }
+  return {
+    added: readyToStore.length,
+    totalFetched: deduped.length,
+  }
 }
 
 /** ---------- HTTP + Cron entrypoints ---------- */
