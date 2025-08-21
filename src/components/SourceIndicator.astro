@@ -3,9 +3,17 @@ interface Props {
   source: string
 }
 const { source } = Astro.props
+
+const titles: Record<string, string> = {
+  macrumors: 'MacRumors',
+  daringfireball: 'Daring Fireball',
+  appjeniksaan: 'Appjeniksaan',
+}
+
+const title = titles[source] ?? 'Unknown'
 ---
 
-<div class={source}></div>
+<div class={source} title={title}></div>
 
 <style>
   div {
