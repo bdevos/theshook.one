@@ -3,11 +3,8 @@ import DayDivider from './DayDivider.astro'
 import Item from './Item.astro'
 
 import { groupByDayLabel } from '../groupByDayLabel'
-import { createTimeFormatter } from '../formatters'
 
 const lastVisit: number = Astro.locals.lastVisit?.getTime() ?? 0
-
-console.log({ lastVisit })
 
 type Item = { pubDate: string; [k: string]: any }
 

@@ -13,12 +13,21 @@ import Layout from '../layouts/Layout.astro'
 
 <script>
   const softUpdate = async () => {
+    const root = document.querySelector('#root') as HTMLDivElement | null
+    const lastVisit = root?.dataset.lastVisit
+
+    if (!lastVisit) {
+      return
+    }
+
     const update = await fetch('/api/update-feeds').then((r) => r.json())
     if (!update.ok || update.added === 0) {
       return
     }
 
-    const html = await fetch('/partial').then((r) => r.text())
+    const html = await fetch(`/partial?lastVisit=${lastVisit}`).then((r) =>
+      r.text()
+    )
 
     const nextDoc = new DOMParser().parseFromString(html, 'text/html')
     const nextFeed = nextDoc.querySelector('#root')
