@@ -150,6 +150,11 @@ async function getAppjeniksaan() {
 /** ---------- Update orchestration ---------- */
 
 async function updateFeedsData(env) {
+  // First we write the last-updated, this will make sure that if multiple requests happen
+  // via the API endpoint the chances are higher that it will be within the 60 seconds and
+  // stop the other call from going further.
+  env.THE_SHOOK_ONE.put('last-updated', new Date().toISOString())
+
   const knownKeys = await getKnownKeys(env)
 
   // Make feeds independent: failure of one won't block the other
@@ -179,8 +184,6 @@ async function updateFeedsData(env) {
       })
     )
   }
-  // Also set the "last updated" marker
-  writes.push(env.THE_SHOOK_ONE.put('last-updated', new Date().toISOString()))
   await Promise.all(writes)
 
   return { added: newLinks.length, totalFetched: deduped.length }
