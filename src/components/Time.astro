@@ -1,0 +1,25 @@
+---
+interface Props {
+  isNew: boolean
+  pubDate: number
+}
+const { isNew, pubDate } = Astro.props
+
+const { timeFormatter } = Astro.locals
+---
+
+<time class:list={{ isNew }}>{timeFormatter.format(pubDate)}</time>
+
+<style>
+  time {
+    color: light-dark(var(--color-700), var(--color-300));
+    font-family: ui-monospace, monospace;
+    font-size: 0.75rem;
+    letter-spacing: -0.05em;
+
+    &.isNew {
+      font-weight: 700;
+      color: light-dark(var(--color-800), var(--color-200));
+    }
+  }
+</style>

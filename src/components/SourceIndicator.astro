@@ -1,0 +1,26 @@
+---
+interface Props {
+  source: string
+}
+const { source } = Astro.props
+---
+
+<div class={source}></div>
+
+<style>
+  div {
+    border-radius: 0.25rem;
+    width: 0.5rem;
+    height: 0.5rem;
+    justify-self: center;
+  }
+  .appjeniksaan {
+    background-color: oklch(63.7% 0.237 25.331);
+  }
+  .macrumors {
+    background-color: #274d7d;
+  }
+  .daringfireball {
+    background-color: #aaa;
+  }
+</style>

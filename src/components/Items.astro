@@ -1,0 +1,77 @@
+---
+import DayDivider from './DayDivider.astro'
+import Item from './Item.astro'
+
+import { groupByDayLabel } from '../groupByDayLabel'
+import { createTimeFormatter } from '../formatters'
+
+const lastVisit: number = Astro.locals.lastVisit?.getTime() ?? 0
+
+console.log({ lastVisit })
+
+type Item = { pubDate: string; [k: string]: any }
+
+const { env, cf } = Astro.locals.runtime
+
+const timeZone = cf?.timezone
+
+// Get all the keys from KV
+const { keys } = await env.THE_SHOOK_ONE.list()
+const names = keys
+  .map(({ name }: any) => name)
+  .filter((name: string) => name.startsWith('link:'))
+
+// Chunk into batches of <=100
+const chunk = (arr: string[], n = 100) =>
+  Array.from({ length: Math.ceil(arr.length / n) }, (_, i) =>
+    arr.slice(i * n, i * n + n)
+  )
+
+// Get in batches
+const batches = await Promise.all(
+  chunk(names).map((batch) => env.THE_SHOOK_ONE.get<Item>(batch, 'json'))
+)
+
+// Merge batches into one
+const merged = new Map<string, Item | null>()
+for (const batch of batches) for (const [k, v] of batch) merged.set(k, v)
+
+const items = [...merged.entries()]
+  .map(([key, value]) => (value ? { key, ...value } : null))
+  .filter((x): x is { key: string; pubDate: string } => !!x)
+  .map(({ pubDate: rawPubDate, ...item }) => {
+    const pubDate = Date.parse(rawPubDate) || 0
+    return {
+      ...item,
+      pubDate,
+      isNew: pubDate > lastVisit,
+    }
+  })
+  .sort((a, b) => b.pubDate - a.pubDate)
+
+const itemsByDay = groupByDayLabel(items, timeZone)
+---
+
+<main>
+  {
+    itemsByDay.map(({ label, items }) => (
+      <section>
+        <DayDivider day={label} />
+        <ul>
+          {items.map((item) => (
+            <Item item={item} />
+          ))}
+        </ul>
+      </section>
+    ))
+  }
+</main>
+
+<style>
+  .isNew {
+    border: 1px solid blue;
+  }
+  li {
+    list-style: none;
+  }
+</style>

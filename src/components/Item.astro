@@ -1,0 +1,32 @@
+---
+import SourceIndicator from './SourceIndicator.astro'
+import Time from './Time.astro'
+
+interface Props {
+  item: Item
+}
+const { item } = Astro.props
+---
+
+<li>
+  <SourceIndicator source={item.source} />
+  <Time isNew={item.isNew} pubDate={item.pubDate} />
+  <a href={item.link} set:html={item.title} />
+</li>
+
+<style>
+  li {
+    align-items: baseline;
+    display: grid;
+    gap: 0.5rem;
+    grid-template-columns: 0.5rem max-content auto;
+    list-style: none;
+    margin-block: 0.125rem;
+  }
+  a {
+    color: light-dark(var(--color-950), var(--color-50));
+    line-height: 1.25;
+    text-decoration: none;
+    text-wrap: pretty;
+  }
+</style>

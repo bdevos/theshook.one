@@ -1,0 +1,21 @@
+{
+  "name": "theshookone",
+  "main": "./worker/index.js",
+  "compatibility_date": "2025-08-21",
+  "kv_namespaces": [
+    {
+      "binding": "THE_SHOOK_ONE",
+      "id": "5a9d5dd04b8f4c4ea19992d4e81bab3b"
+    }
+  ],
+  "triggers": {
+    "crons": ["0 * * * *"]
+  },
+  "assets": {
+    "binding": "ASSETS",
+    "directory": "./dist"
+  },
+  "observability": {
+    "enabled": true
+  }
+}

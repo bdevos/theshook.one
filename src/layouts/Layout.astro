@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" href="/3311.png" />
+    <meta name="generator" content={Astro.generator} />
+    <title>theshook.¹</title>
+  </head>
+  <body>
+    <div>
+      <slot />
+    </div>
+  </body>
+</html>
+
+<style is:global>
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  :root {
+    --color-50: oklch(98.5% 0 0);
+    --color-100: oklch(97% 0.001 106.424);
+    --color-200: oklch(92.2% 0 0);
+    --color-300: oklch(87% 0 0);
+    --color-400: oklch(70.8% 0 0);
+    --color-500: oklch(55.6% 0 0);
+    --color-600: oklch(43.9% 0 0);
+    --color-700: oklch(37.1% 0 0);
+    --color-800: oklch(26.9% 0 0);
+    --color-900: oklch(20.5% 0 0);
+    --color-950: oklch(14.5% 0 0);
+    --background-color: light-dark(var(--color-50), black);
+  }
+</style>
+
+<style>
+  html {
+    color-scheme: light dark;
+    font-family: ui-sans-serif, system-ui, sans-serif;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body {
+    background-color: var(--background-color);
+    color: light-dark(var(--color-950), var(--color-50));
+
+    > div {
+      max-width: 48rem;
+      margin-block-start: 0.5rem;
+      margin-block-end: 0.25rem;
+      margin-inline: auto;
+      padding-inline: 0.25rem;
+    }
+  }
+</style>

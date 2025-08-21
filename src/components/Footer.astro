@@ -1,0 +1,26 @@
+<footer>
+  <a href="https://appjeniksaan.nl">Appjeniksaan</a>
+  <a href="https://astro.build">Astro</a>
+  <a href="https://github.com/bdevos/theshook.one"> Source code </a>
+</footer>
+
+<style>
+  footer {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    padding-block-start: 2rem;
+    padding-block-end: 3rem;
+  }
+
+  a {
+    color: light-dark(var(--color-500), var(--color-400));
+    font-size: 0.75rem;
+    font-weight: 500;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+</style>

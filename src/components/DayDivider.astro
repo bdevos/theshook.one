@@ -1,0 +1,42 @@
+---
+interface Props {
+  day: string
+}
+const { day } = Astro.props
+---
+
+{
+  day !== 'Today' && (
+    <div>
+      <hr />
+      <h2>{day}</h2>
+    </div>
+  )
+}
+
+<style>
+  div {
+    align-items: center;
+    display: grid;
+    grid-template-columns: 0.5rem max-content auto;
+    margin-block: 0.5rem;
+  }
+
+  hr {
+    border: 0;
+    border-top: 1px solid light-dark(var(--color-300), var(--color-700));
+    grid-column: 1 / -1;
+    grid-row: 1;
+    margin-block-start: 2px;
+  }
+
+  h2 {
+    background-color: var(--background-color);
+    color: light-dark(var(--color-700), var(--color-100));
+    grid-column-start: 2;
+    grid-row: 1;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding-inline: 0.5rem;
+  }
+</style>
