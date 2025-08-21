@@ -100,7 +100,7 @@ async function getMacrumors() {
     title: item.title,
     link: item.link,
     pubDate: normalizePubDate(item.pubDate),
-    id: item.guid?.['#text'] ?? item.guid ?? item.link, // fallback to link if needed
+    id: item.guid?.['#text'] ?? item.guid ?? item.link,
     source: 'macrumors',
   }))
 }
@@ -142,7 +142,7 @@ async function getAppjeniksaan() {
     title: item.title,
     link: item.link,
     pubDate: normalizePubDate(item.pubDate),
-    id: item.guid,
+    id: item.guid?.['#text'] ?? item.guid ?? item.link,
     source: 'appjeniksaan',
   }))
 }
