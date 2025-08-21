@@ -8,7 +8,7 @@
     "astro:preview": "astro preview",
     "astro": "astro",
     "format": "prettier --write .",
-    "dev": "npm run astro:build && npx wrangler dev --test-scheduled",
+    "dev": "npm run astro:build && wrangler dev --test-scheduled",
     "kv:update": "curl \"http://localhost:8787/__scheduled?cron=0+*+*+*+*\""
   },
   "dependencies": {
@@ -17,5 +17,8 @@
     "fast-xml-parser": "5.2.5",
     "prettier": "3.6.2",
     "prettier-plugin-astro": "0.14.1"
+  },
+  "devDependencies": {
+    "wrangler": "4.31.0"
   }
 }
