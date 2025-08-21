@@ -165,8 +165,8 @@ async function updateFeedsData(env) {
   // Deduplicate by id across feeds
   const deduped = uniqueById(batches)
 
-  // Only new items
-  const newLinks = deduped.filter((l) => !knownKeys.has(l.id))
+  // Only new items (compare against the actual KV key, not just id)
+  const newLinks = deduped.filter((l) => !knownKeys.has(toKvKey(l)))
 
   // Write to KV with proper TTL; skip expired/near-expired items
   const writes = []
@@ -179,13 +179,78 @@ async function updateFeedsData(env) {
       })
     )
   }
+  // Also set the "last updated" marker
   writes.push(env.THE_SHOOK_ONE.put('last-updated', new Date().toISOString()))
   await Promise.all(writes)
+
+  return { added: newLinks.length, totalFetched: deduped.length }
+}
+
+/** ---------- HTTP + Cron entrypoints ---------- */
+
+async function handleUpdateRequest(env) {
+  // Throttle: only allow if the previous update is > 60s ago
+  const last = await env.THE_SHOOK_ONE.get('last-updated')
+  if (last) {
+    const lastDate = new Date(last)
+    const deltaMs = Date.now() - lastDate.getTime()
+    if (!Number.isNaN(lastDate.getTime()) && deltaMs < 60_000) {
+      return new Response(
+        JSON.stringify({
+          ok: false,
+          reason: 'throttled',
+          lastUpdated: lastDate.toISOString(),
+          retryAfterSeconds: Math.ceil((60_000 - deltaMs) / 1000),
+        }),
+        {
+          status: 429,
+          headers: {
+            'content-type': 'application/json; charset=utf-8',
+            'cache-control': 'no-store',
+          },
+        }
+      )
+    }
+  }
+
+  try {
+    const result = await updateFeedsData(env)
+    return new Response(
+      JSON.stringify({
+        ok: true,
+        updatedAt: new Date().toISOString(),
+        ...result,
+      }),
+      {
+        headers: {
+          'content-type': 'application/json; charset=utf-8',
+          'cache-control': 'no-store',
+        },
+      }
+    )
+  } catch (err) {
+    return new Response(
+      JSON.stringify({ ok: false, error: String(err?.message || err) }),
+      {
+        status: 500,
+        headers: { 'content-type': 'application/json; charset=utf-8' },
+      }
+    )
+  }
 }
 
 export default {
   async scheduled(controller, env, ctx) {
     ctx.waitUntil(updateFeedsData(env))
   },
-  fetch: astroWorker.fetch,
+
+  async fetch(request, env, ctx) {
+    const url = new URL(request.url)
+
+    if (url.pathname === '/api/update-feeds') {
+      return handleUpdateRequest(env)
+    }
+
+    return astroWorker.fetch(request, env, ctx)
+  },
 }
