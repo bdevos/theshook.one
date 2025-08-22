@@ -4,7 +4,7 @@ import Item from './Item.astro'
 
 import { groupByDayLabel } from '../groupByDayLabel'
 
-const lastVisit: number = Astro.locals.lastVisit?.getTime() ?? 0
+const lastSeenIngestion: number = Astro.locals.lastSeenIngestion?.getTime() ?? 0
 
 type Item = { pubDate: string; [k: string]: any }
 
@@ -41,7 +41,7 @@ const items = [...merged.entries()]
     return {
       ...item,
       pubDate,
-      isNew: pubDate > lastVisit,
+      isNew: pubDate > lastSeenIngestion,
     }
   })
   .sort((a, b) => b.pubDate - a.pubDate)

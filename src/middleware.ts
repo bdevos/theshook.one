@@ -1,37 +1,55 @@
 import { defineMiddleware } from 'astro:middleware'
 import { createTimeFormatter } from './formatters'
 
+type PrefCookie = { lastSeenIngestion?: string }
+
 const COOKIE_NAME = 'user_preferences'
 const SEVEN_DAYS_SECONDS = 60 * 60 * 24 * 7
 
 export const onRequest = defineMiddleware(async (context, next) => {
-  let previousVisit: Date | null = null
+  const { runtime } = context.locals
+  if (!runtime) {
+    return next()
+  }
+  const { env, cf } = runtime
+  const kv = env.THE_SHOOK_ONE
 
+  // 1) Read previous ingestion watermark from cookie
+  let previousIngestion: Date | null = null
   const raw = context.cookies.get(COOKIE_NAME)?.value
   if (raw) {
     try {
-      const parsed = JSON.parse(raw)
-      if (parsed?.lastVisit) {
-        const date = new Date(parsed.lastVisit)
-        if (!Number.isNaN(date.getTime())) {
-          previousVisit = date
-        }
+      const parsed = JSON.parse(raw) as PrefCookie
+      if (parsed?.lastSeenIngestion) {
+        const d = new Date(parsed.lastSeenIngestion)
+        if (!Number.isNaN(d.getTime())) previousIngestion = d
       }
-    } catch {
-      // ignore bad cookie; will be repaired on write
-    }
+    } catch {}
   }
 
-  context.locals.lastVisit = previousVisit
+  let currentIngestion: Date | null = null
+  try {
+    const iso = kv ? await kv.get('last-updated') : null
+    if (iso) {
+      const d = new Date(iso)
+      if (!Number.isNaN(d.getTime())) currentIngestion = d
+    }
+  } catch {}
+
+  context.locals.lastSeenIngestion = previousIngestion
 
   context.locals.timeFormatter = createTimeFormatter(
-    context.locals.runtime?.cf?.timezone
+    cf?.timezone as string | undefined
   )
 
-  const now = new Date()
-  const value = JSON.stringify({ lastVisit: now.toISOString() })
+  const value: PrefCookie = {
+    lastSeenIngestion:
+      currentIngestion?.toISOString() ??
+      previousIngestion?.toISOString() ??
+      new Date().toISOString(),
+  }
 
-  context.cookies.set(COOKIE_NAME, value, {
+  context.cookies.set(COOKIE_NAME, JSON.stringify(value), {
     path: '/',
     httpOnly: true,
     sameSite: 'lax',
