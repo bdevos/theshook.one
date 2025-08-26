@@ -4,13 +4,14 @@ import Time from './Time.astro'
 
 interface Props {
   item: Item
+  timeFormatter: Intl.DateTimeFormat
 }
-const { item } = Astro.props
+const { item, timeFormatter } = Astro.props
 ---
 
 <li>
   <SourceIndicator source={item.source} />
-  <Time isNew={item.isNew} pubDate={item.pubDate} />
+  <Time pubDate={item.pubDate} timeFormatter={timeFormatter} />
   <a href={item.link} set:html={item.title} />
 </li>
 

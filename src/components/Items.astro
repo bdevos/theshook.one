@@ -3,14 +3,14 @@ import DayDivider from './DayDivider.astro'
 import Item from './Item.astro'
 
 import { groupByDayLabel } from '../groupByDayLabel'
-
-const lastSeenIngestion: number = Astro.locals.lastSeenIngestion?.getTime() ?? 0
+import { createTimeFormatter } from '../formatters'
 
 type Item = { pubDate: string; [k: string]: any }
 
 const { env, cf } = Astro.locals.runtime
 
 const timeZone = cf?.timezone
+const timeFormatter = createTimeFormatter(timeZone)
 
 // Get all the keys from KV
 const { keys } = await env.THE_SHOOK_ONE.list()
@@ -41,7 +41,6 @@ const items = [...merged.entries()]
     return {
       ...item,
       pubDate,
-      isNew: pubDate > lastSeenIngestion,
     }
   })
   .sort((a, b) => b.pubDate - a.pubDate)
@@ -56,7 +55,7 @@ const itemsByDay = groupByDayLabel(items, timeZone)
         <DayDivider day={label} />
         <ul>
           {items.map((item) => (
-            <Item item={item} />
+            <Item item={item} timeFormatter={timeFormatter} />
           ))}
         </ul>
       </section>

@@ -14,9 +14,6 @@ declare global {
         env: Env
         cf?: Request['cf']
       }
-      lastVisit: Date | null
-      timeFormatter: Intl.DateTimeFormat
-      lastSeenIngestion?: Date | null
     }
   }
 }

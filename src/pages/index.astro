@@ -10,3 +10,34 @@ import Layout from '../layouts/Layout.astro'
   <Items />
   <Footer />
 </Layout>
+
+<script is:inline>
+  const calcIsNew = () => {
+    const key = 'last-seen'
+    const times = Array.from(document.querySelectorAll('time[data-pub]'))
+    if (times.length === 0) return
+
+    const toNum = (v) => {
+      const n = Number(v)
+      return Number.isFinite(n) ? n : 0
+    }
+
+    const lastSeen = toNum(localStorage.getItem(key))
+    const pubDates = times.map((t) => toNum(t.dataset.pub))
+
+    for (const t of times) {
+      const pub = toNum(t.dataset.pub)
+      if (pub > lastSeen) t.classList.add('isNew')
+    }
+
+    const latest = Math.max(...pubDates)
+
+    // Defer the write so the current page can render first
+    requestAnimationFrame(() => {
+      try {
+        localStorage.setItem(key, String(latest))
+      } catch {}
+    })
+  }
+  calcIsNew()
+</script>

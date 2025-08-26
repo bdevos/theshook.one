@@ -1,14 +1,15 @@
 ---
 interface Props {
-  isNew: boolean
   pubDate: number
+  timeFormatter: Intl.DateTimeFormat
 }
-const { isNew, pubDate } = Astro.props
-
-const { timeFormatter } = Astro.locals
+const { pubDate, timeFormatter } = Astro.props
+const dateTime = new Date(pubDate)
 ---
 
-<time class:list={{ isNew }}>{timeFormatter.format(pubDate)}</time>
+<time datetime={dateTime.toISOString()} data-pub={pubDate}>
+  {timeFormatter.format(pubDate)}
+</time>
 
 <style>
   time {
