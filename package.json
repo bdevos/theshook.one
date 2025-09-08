@@ -12,8 +12,8 @@
     "kv:update": "curl \"http://localhost:8787/__scheduled?cron=0+*+*+*+*\""
   },
   "dependencies": {
-    "@astrojs/cloudflare": "12.6.7",
-    "astro": "5.13.5",
+    "@astrojs/cloudflare": "12.6.8",
+    "astro": "5.13.6",
     "fast-xml-parser": "5.2.5",
     "prettier": "3.6.2",
     "prettier-plugin-astro": "0.14.1"
