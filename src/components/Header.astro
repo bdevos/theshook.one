@@ -1,6 +1,6 @@
 ---
 import { parseTimeZone } from '../formatters'
-import { parseLastUpdated } from '../lastUpdated'
+import { lastUpdatedLabel, parseLastUpdated } from '../lastUpdated'
 
 const { cf, env } = Astro.locals.runtime
 
@@ -31,6 +31,7 @@ const lastUpdated = parseLastUpdated(lastUpdatedTimeStamp)
                 clip-rule="evenodd"
               />
             </svg>
+            {lastUpdatedLabel(lastUpdated)}
           </div>
         )
       }
