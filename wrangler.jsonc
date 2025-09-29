@@ -2,7 +2,6 @@
   "name": "theshookone",
   "main": "./worker/index.js",
   "compatibility_date": "2025-09-29",
-  // "compatibility_flags": ["nodejs_compat"],
   "kv_namespaces": [
     {
       "binding": "THE_SHOOK_ONE",

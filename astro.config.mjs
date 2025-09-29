@@ -1,14 +1,14 @@
 // @ts-check
-import { defineConfig, passthroughImageService } from 'astro/config'
+import { defineConfig } from 'astro/config'
 
 import cloudflare from '@astrojs/cloudflare'
 
 // https://astro.build/config
 export default defineConfig({
-  adapter: cloudflare(),
+  adapter: cloudflare({
+    imageService: 'passthrough',
+  }),
   site: 'https://theshook.one',
   output: 'server',
-  image: {
-    service: passthroughImageService(),
-  },
+  image: { service: { entrypoint: 'astro/assets/services/passthrough' } },
 })

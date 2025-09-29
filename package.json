@@ -17,9 +17,9 @@
     "astro": "5.13.10"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "4.20250922.0",
+    "@cloudflare/workers-types": "4.20250927.0",
     "prettier": "3.6.2",
     "prettier-plugin-astro": "0.14.1",
-    "wrangler": "4.38.0"
+    "wrangler": "4.40.2"
   }
 }
