@@ -14,7 +14,7 @@
   "dependencies": {
     "@astrojs/cloudflare": "12.6.9",
     "fast-xml-parser": "5.2.5",
-    "astro": "5.13.10"
+    "astro": "5.14.1"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "4.20250927.0",
