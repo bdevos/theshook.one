@@ -98,7 +98,7 @@ async function getMacrumors() {
   const items = data?.rss?.channel?.item ?? []
   return items.slice(0, 20).map((item) => ({
     title: item.title,
-    link: item.link,
+    link: item.comments ?? item.link,
     pubDate: normalizePubDate(item.pubDate),
     id: item.guid?.['#text'] ?? item.guid ?? item.link,
     source: 'macrumors',
