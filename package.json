@@ -13,13 +13,13 @@
   },
   "dependencies": {
     "@astrojs/cloudflare": "12.6.12",
-    "fast-xml-parser": "5.4.1",
+    "fast-xml-parser": "5.4.2",
     "astro": "5.18.0"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "4.20260305.0",
+    "@cloudflare/workers-types": "4.20260307.1",
     "prettier": "3.8.1",
     "prettier-plugin-astro": "0.14.1",
-    "wrangler": "4.69.0"
+    "wrangler": "4.71.0"
   }
 }
