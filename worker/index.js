@@ -188,7 +188,7 @@ export default {
   },
   async fetch(request, env, ctx) {
     const url = new URL(request.url)
-    if (url.pathname === '/__scheduled') {
+    if (url.pathname === '/__scheduled' && url.hostname === 'localhost') {
       const cron = url.searchParams.get('cron') ?? ''
       ctx.waitUntil(
         this.scheduled({ scheduledTime: Date.now(), cron }, env, ctx)
