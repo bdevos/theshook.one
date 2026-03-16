@@ -1,8 +1,9 @@
 ---
 import { parseTimeZone } from '../formatters'
 import { lastUpdatedLabel, parseLastUpdated } from '../lastUpdated'
+import { env } from 'cloudflare:workers'
 
-const { cf, env } = Astro.locals.runtime
+const cf = Astro.request.cf
 
 const timeZone = cf?.timezone
 

@@ -5,9 +5,11 @@ import Item from './Item.astro'
 import { groupByDayLabel } from '../groupByDayLabel'
 import { createTimeFormatter } from '../formatters'
 
+import { env } from 'cloudflare:workers'
+
 type Item = { pubDate: string; [k: string]: any }
 
-const { env, cf } = Astro.locals.runtime
+const cf = Astro.request.cf
 
 const timeZone = cf?.timezone
 const timeFormatter = createTimeFormatter(timeZone)

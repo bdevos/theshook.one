@@ -8,13 +8,13 @@
     "astro:preview": "astro preview",
     "astro": "astro",
     "format": "prettier --write .",
-    "dev": "npm run astro:build && wrangler dev --test-scheduled",
+    "dev": "wrangler types && npm run astro:build && wrangler dev --test-scheduled",
     "kv:update": "curl \"http://localhost:8787/__scheduled?cron=0+*+*+*+*\""
   },
   "dependencies": {
-    "@astrojs/cloudflare": "12.6.12",
-    "fast-xml-parser": "5.4.1",
-    "astro": "5.18.0"
+    "@astrojs/cloudflare": "13.1.1",
+    "astro": "6.0.4",
+    "fast-xml-parser": "5.4.1"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "4.20260305.0",

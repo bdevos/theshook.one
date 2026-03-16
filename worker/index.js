@@ -1,4 +1,4 @@
-import astroWorker from '../dist/_worker.js/index.js'
+import { handle } from '@astrojs/cloudflare/handler'
 import { XMLParser } from 'fast-xml-parser'
 
 /** ---------- Parsing & date helpers ---------- */
@@ -186,5 +186,15 @@ export default {
   async scheduled(_, env, ctx) {
     ctx.waitUntil(updateFeedsData(env))
   },
-  fetch: astroWorker.fetch,
+  async fetch(request, env, ctx) {
+    const url = new URL(request.url)
+    if (url.pathname === '/__scheduled') {
+      const cron = url.searchParams.get('cron') ?? ''
+      ctx.waitUntil(
+        this.scheduled({ scheduledTime: Date.now(), cron }, env, ctx)
+      )
+      return new Response('Scheduled triggered')
+    }
+    return handle(request, env, ctx)
+  },
 }
