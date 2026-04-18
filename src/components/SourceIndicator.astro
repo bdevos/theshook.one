@@ -8,6 +8,7 @@ const titles: Record<string, string> = {
   macrumors: 'MacRumors',
   daringfireball: 'Daring Fireball',
   appjeniksaan: 'Appjeniksaan',
+  unsung: 'Unsung',
 }
 
 const title = titles[source] ?? 'Unknown'
@@ -21,6 +22,9 @@ const title = titles[source] ?? 'Unknown'
     width: 0.5rem;
     height: 0.5rem;
     justify-self: center;
+  }
+  .unsung {
+    background-color: color(display-p3 0.98898 0.41605 0.00681);
   }
   .appjeniksaan {
     background-color: oklch(63.7% 0.237 25.331);

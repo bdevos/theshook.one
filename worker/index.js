@@ -147,6 +147,30 @@ async function getAppjeniksaan() {
   }))
 }
 
+async function getUnsung() {
+  const url = 'https://unsung.aresluna.org/feed.xml'
+  const res = await fetch(url, { cf: { cacheTtl: 300 } })
+  if (!res.ok) throw new Error(`Unsung fetch failed: ${res.status}`)
+  const xml = await res.text()
+
+  const data = parser.parse(xml)
+  const items = data?.feed?.entry ?? []
+
+  return items.slice(0, 20).map((item) => {
+    const links = Array.isArray(item.link)
+      ? item.link
+      : [item.link].filter(Boolean)
+    const alternate = links.find((l) => l?.['@_rel'] === 'alternate')
+    return {
+      title: item.title,
+      link: alternate?.['@_href'],
+      pubDate: normalizePubDate(item.published ?? item.updated),
+      id: item.id,
+      source: 'unsung',
+    }
+  })
+}
+
 async function updateFeedsData(env) {
   const knownKeys = await getKnownKeys(env)
 
@@ -155,6 +179,7 @@ async function updateFeedsData(env) {
     getMacrumors(),
     getDaringFireball(),
     getAppjeniksaan(),
+    getUnsung(),
   ])
   const batches = results
     .filter((r) => r.status === 'fulfilled')
