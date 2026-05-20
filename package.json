@@ -12,9 +12,9 @@
     "kv:update": "curl \"http://localhost:8787/__scheduled?cron=0+*+*+*+*\""
   },
   "dependencies": {
-    "@astrojs/cloudflare": "13.5.0",
-    "astro": "6.3.1",
-    "fast-xml-parser": "5.7.3"
+    "@astrojs/cloudflare": "13.5.2",
+    "astro": "6.3.5",
+    "fast-xml-parser": "5.8.0"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "4.20260511.1",
