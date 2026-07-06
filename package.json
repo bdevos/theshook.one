@@ -12,14 +12,14 @@
     "kv:update": "curl \"http://localhost:8787/__scheduled?cron=0+*+*+*+*\""
   },
   "dependencies": {
-    "@astrojs/cloudflare": "14.0.1",
-    "astro": "7.0.3",
+    "@astrojs/cloudflare": "14.1.1",
+    "astro": "7.0.6",
     "fast-xml-parser": "5.9.3"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "4.20260629.1",
-    "prettier": "3.9.3",
+    "@cloudflare/workers-types": "5.20260706.1",
+    "prettier": "3.9.4",
     "prettier-plugin-astro": "0.14.1",
-    "wrangler": "4.105.0"
+    "wrangler": "4.107.0"
   }
 }
