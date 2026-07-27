@@ -29,5 +29,9 @@ const { item, timeFormatter } = Astro.props
     line-height: 1.25;
     text-decoration: none;
     text-wrap: pretty;
+
+    &:visited {
+      color: light-dark(var(--color-600), var(--color-400));
+    }
   }
 </style>
